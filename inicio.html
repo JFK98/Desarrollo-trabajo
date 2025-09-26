@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Inicio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 3 CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    .jumbotron {
+      margin-bottom: 0;
+      background-color: #b65d5d;
+      padding-top: 1vw;
+      padding-bottom: 1vw;
+      padding-left: auto;
+      padding-right: auto;
+    }
+    #logo {
+      width: 15vw;
+      height: 8vw;
+    }
+    .panel {
+      border-radius: 8px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    }
+    .panel-heading {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    .panel-footer {
+      background: #f5f5f5;
+      border-top: 1px solid #ddd;
+      color: #888;
+      font-size: 1em;
+    }
+    .main-content {
+      flex: 1 0 auto;
+    }
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+      width: 100%;
+      flex-shrink: 0;
+      color: #222;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="main-content">
+  <div class="jumbotron">
+    <div class="container text-center">
+      <h1><img id="logo" alt="Logo" src="imagenes/Flor y Vida logo.jpg"></h1>      
+      <p>Mission, Vission & Values</p>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" alt="logo" href="#">Logo</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="inicio.html">Inicio</a></li>
+          <li><a href="#">Quienes somos</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
+          <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <h1 class="text-center">Productos</h1>
+  <div class="container">    
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Producto 1</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-danger">
+          <div class="panel-heading">Producto 2</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-success">
+          <div class="panel-heading">Producto 3</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div><br>
+
+  <div class="container">    
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Producto 4</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-danger">
+          <div class="panel-heading">Producto 5</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-success">
+          <div class="panel-heading">Producto 6</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div><br> 
+
+  <div class="container">    
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Producto 7</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-danger">
+          <div class="panel-heading">Producto 8</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-success">
+          <div class="panel-heading">Producto 9</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div><br>
+
+  <div class="container">    
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Producto 10</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-primary">
+          <div class="panel-heading">Producto 11</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-primary">
+          <div class="panel-heading">Producto 12</div>
+          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Descripción del producto y precio</div>
+          <button class="btn btn-success btn-block">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div><br><br>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>@Flor & Vida 2025 Copyright</p>  
+  <p>Dirección <br>Comuna de Maipu <br>Av. no se llama 456</p>
+</footer>
+
+</body>
+</html>
