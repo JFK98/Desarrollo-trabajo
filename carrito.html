@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrito - Flor y Vida</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 3 CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      background: #fff;
+      min-height: 100vh;
+    }
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    .carrito-panel {
+      border: 2px solid #b5b5b5;
+      border-radius: 8px;
+      background: #fafafa;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      margin: 2rem auto;
+      max-width: 600px;
+      padding: 30px 30px 20px 30px;
+    }
+    .carrito-panel h3 {
+      margin-top: 0;
+      margin-bottom: 25px;
+      color: #b65d5d;
+      font-weight: bold;
+      text-align: center;
+    }
+    .form-label {
+      font-weight: 500;
+      color: #333;
+    }
+    .btn-pagar {
+      background: #7ed6fc;
+      color: #fff;
+      font-weight: 600;
+      width: 100%;
+      font-size: 1.2rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      border: none;
+    }
+    .btn-pagar:hover {
+      background: #4fc3f7;
+      color: #fff;
+    }
+    .btn-cancel {
+      background: #d32f2f;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+    }
+    .btn-cancel:hover {
+      background: #b71c1c;
+      color: #fff;
+    }
+    .panel-footer {
+      background: #f5f5f5;
+      border-top: 1px solid #ddd;
+      padding: 10px 15px;
+      color: #888;
+      font-size: 1em;
+    }
+
+    .jumbotron {
+      margin-bottom: 0;
+      background-color: #b65d5d;
+      padding-top: 1vw;
+      padding-bottom: 1vw;
+      padding-left: auto;
+      padding-right: auto;
+    }
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+      width: 100%;
+      flex-shrink: 0;
+      color: #222;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="jumbotron">
+  <div class="container text-center">
+    <h1><img id="logo" alt="logo" src="imagenes/Flor y Vida logo.jpg"></h1>      
+    <p>Mission, Vission & Values</p>
+  </div>
+</div>
+  <!-- Navbar Bootstrap 3 -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" alt="logo" href="#">Logo</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="inicio.html">Inicio</a></li>
+          <li><a href="#">Quienes somos</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
+          <li class="active"><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Carrito estilo panel Bootstrap 3 -->
+  <div class="container">
+    <div class="carrito-panel">
+      <h3>Carrito de compras</h3>
+      <form>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label class="form-label">Producto:</label>
+              <input type="text" class="form-control" value="Ramo de rosas" readonly>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div class="form-group">
+              <label class="form-label">Precio:</label>
+              <input type="text" class="form-control" value="$17.000" readonly>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <div class="form-group">
+              <label class="form-label">Cantidad:</label>
+              <input type="number" class="form-control" value="2" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total:</label>
+          <input type="text" class="form-control" value="34.000" readonly>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label class="form-label">Seleccione el método de envío</label>
+          <div class="input-group">
+            <select class="form-control">
+              <option>Personalizado</option>
+              <option>Envío estándar</option>
+              <option>Retiro en tienda</option>
+            </select>
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">cambiar</button>
+            </span>
+          </div>
+        </div>
+        <button type="button" class="btn btn-pagar" data-toggle="modal" data-target="#modalPago">Ir a pagar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Pedido registrado -->
+  <div class="modal fade" id="modalPedido" tabindex="-1" role="dialog" aria-labelledby="modalPedidoLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalPedidoLabel">Pedido con entrega personalizada</h4>
+        </div>
+        <div class="modal-body">
+          Pedido registrado
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal: Pago fallido -->
+  <div class="modal fade" id="modalPagoFallido" tabindex="-1" role="dialog" aria-labelledby="modalPagoFallidoLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalPagoFallidoLabel">Pago fallido</h4>
+        </div>
+        <div class="modal-body">
+          Error en el pago<br>Tarjeta inválida
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal: Simulación de pago -->
+  <div class="modal fade" id="modalPago" tabindex="-1" role="dialog" aria-labelledby="modalPagoLabel">
+    <div class="modal-dialog" role="document">
+      <form class="modal-content" id="formPago">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalPagoLabel">Pago</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Número de tarjeta</label>
+            <input type="text" class="form-control" id="tarjeta" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Fecha de expiración</label>
+            <input type="text" class="form-control" id="expiracion" placeholder="MM/AA" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV</label>
+            <input type="text" class="form-control" id="cvv" placeholder="123" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-pagar">Confirmar pago</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <footer class="container-fluid text-center">
+  <p>@Flor & Vida 2025 Copyright</p>  
+  <p>Dirección <br>Comuna de Maipu <br>Av. no se llama 456</p>
+</footer>
+  <script>
+    // Simulación de pago: si la tarjeta termina en 0, es fallida
+    document.getElementById('formPago').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var tarjeta = document.getElementById('tarjeta').value.trim();
+      $('#modalPago').modal('hide');
+      setTimeout(function() {
+        if (tarjeta.endsWith('0')) {
+          $('#modalPagoFallido').modal('show');
+        } else {
+          $('#modalPedido').modal('show');
+        }
+      }, 400);
+    });
+  </script>
+</body>
+</html>
