@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 3 CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    .registro-panel {
+      border: 2px solid #b5b5b5;
+      border-radius: 8px;
+      background: #fafafa;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      margin: 2rem auto;
+      max-width: 500px;
+      padding: 30px 30px 20px 30px;
+    }
+    .registro-panel h3 {
+      margin-top: 0;
+      margin-bottom: 25px;
+      color: #b65d5d;
+      font-weight: bold;
+      text-align: center;
+    }
+    .form-label {
+      font-weight: 500;
+      color: #333;
+    }
+    .btn-registro {
+      background: #7ed6fc;
+      color: #fff;
+      font-weight: 600;
+      width: 100%;
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+      border: none;
+    }
+    .btn-registro:hover {
+      background: #4fc3f7;
+      color: #fff;
+    }
+    .jumbotron {
+      margin-bottom: 0;
+      background-color: #b65d5d;
+      padding-top: 1vw;
+      padding-bottom: 1vw;
+      padding-left: auto;
+      padding-right: auto;
+    }
+    .main-content {
+      flex: 1 0 auto;
+    }
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+      width: 100%;
+      flex-shrink: 0;
+      color: #222;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="main-content">
+  <div class="jumbotron">
+    <div class="container text-center">
+      <h1><img id="logo" alt="logo" src="imagenes/Flor y Vida logo.jpg"></h1>      
+      <p>Mission, Vission & Values</p>
+    </div>
+  </div>
+  <!-- Navbar Bootstrap 3 -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" alt="logo" href="#">Logo</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="inicio.html">Inicio</a></li>
+          <li><a href="#">Quienes somos</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="registro.html"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
+          <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Contenido principal -->
+  <div class="container">
+    <div class="registro-panel">
+      <h3>Registro de usuario</h3>
+      <form>
+        <div class="form-group">
+          <label for="usuario" class="form-label">Usuario:</label>
+          <input type="email" class="form-control" id="usuario" placeholder="example@gmail.com" required>
+        </div>
+        <div class="form-group">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" class="form-control" id="password" placeholder="ingrese una contraseña" required>
+        </div>
+        <div class="form-group">
+          <label for="telefono" class="form-label">Numero de telefono:</label>
+          <input type="tel" class="form-control" id="telefono" placeholder="ingrese su numero telefonico" required>
+        </div>
+        <button type="submit" class="btn btn-registro">Crear cuenta</button>
+      </form>
+    </div>
+  </div>
+</div>
+<footer class="container-fluid text-center">
+  <p>@Flor & Vida 2025 Copyright</p>  
+  <p>Dirección <br>Comuna de Maipu <br>Av. no se llama 456</p>
+</footer>
+</body>
+</html>
