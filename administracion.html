@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Administración - Flor y Vida</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f7f7f7;
+      min-height: 100vh;
+    }
+    .sidebar {
+      min-height: 100vh;
+      background: #fff;
+      border-right: 2px solid #e0e0e0;
+      padding: 0;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.03);
+    }
+    .sidebar .nav-link {
+      color: #333;
+      font-weight: 500;
+      padding: 1rem 1.5rem;
+      border-radius: 0;
+      cursor: pointer;
+    }
+    .sidebar .nav-link.active, .sidebar .nav-link:hover {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+    .sidebar .btn-danger {
+      margin: 1rem 1.5rem;
+      width: calc(100% - 3rem);
+    }
+    .topbar {
+      background: #1976d2;
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #1565c0;
+    }
+    .topbar .icon {
+      font-size: 1.5rem;
+      margin-left: 1rem;
+      cursor: pointer;
+    }
+    .user-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .user-actions .btn {
+      width: 100%;
+      font-weight: 600;
+    }
+    .card-user {
+      border: 2px solid #03a9f4;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(3,169,244,0.07);
+      margin-bottom: 2rem;
+    }
+    .card-user .card-header {
+      background: #03a9f4;
+      color: #fff;
+      font-weight: 600;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+    }
+    .modal-header {
+      background: #03a9f4;
+      color: #fff;
+      border-radius: 8px 8px 0 0;
+    }
+    .btn-cancel {
+      background: #d32f2f;
+      color: #fff;
+      font-weight: 600;
+    }
+    .btn-cancel:hover {
+      background: #b71c1c;
+      color: #fff;
+    }
+    .btn-action {
+      background: #03a9f4;
+      color: #fff;
+      font-weight: 600;
+    }
+    .btn-action:hover {
+      background: #0288d1;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <!-- Sidebar -->
+      <nav class="col-2 sidebar d-flex flex-column p-0">
+        <div class="topbar d-block d-md-none">
+          <span>Administración</span>
+        </div>
+        <ul class="nav flex-column mt-4" id="sidebarMenu">
+          <li class="nav-item"><a class="nav-link active" data-section="dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" data-section="pedidos">Pedidos</a></li>
+          <li class="nav-item"><a class="nav-link" data-section="productos">Productos</a></li>
+          <li class="nav-item"><a class="nav-link" data-section="clientes">Clientes</a></li>
+          <li class="nav-item"><a class="nav-link" data-section="reportes">Reportes</a></li>
+          <li class="nav-item"><a class="nav-link" data-section="usuarios">Usuarios</a></li>
+          <li class="nav-item"><a class="nav-link" data-section="configuracion">Configuración</a></li>
+        </ul>
+        <button class="btn btn-danger mt-auto">Cerrar sesión</button>
+      </nav>
+      <!-- Main Content -->
+      <main class="col-10 px-0">
+        <!-- Topbar -->
+        <div class="topbar d-none d-md-flex">
+          <span style="font-size:1.2rem;font-weight:600;">Administración</span>
+          <span>
+            <i class="bi bi-bell icon"></i>
+            <i class="bi bi-person-circle icon"></i>
+          </span>
+        </div>
+        <div class="container py-4">
+          <!-- Secciones de contenido -->
+          <div id="dashboard" class="section-content">
+            <div class="card card-user mb-4">
+              <div class="card-header">Dashboard</div>
+              <div class="card-body">
+                <p>Bienvenido al panel de administración.</p>
+              </div>
+            </div>
+          </div>
+          <div id="pedidos" class="section-content d-none">
+            <div class="card card-user mb-4">
+              <div class="card-header">Pedidos</div>
+              <div class="card-body">
+                <h6 class="mb-3">Pedidos confirmados listos para preparación</h6>
+                <div class="d-flex justify-content-end mb-2">
+                  <button class="btn btn-primary btn-sm">Actualizar lista</button>
+                </div>
+                <div class="table-responsive mb-4">
+                  <table class="table table-bordered align-middle">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Fecha de pedido</th>
+                        <th>Estado</th>
+                        <th>Cliente</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>23/03/2025 - 27/03/2025 10am</td>
+                        <td>Entregado</td>
+                        <td>#1234</td>
+                      </tr>
+                      <tr>
+                        <td>24/03/2025-30/03/2025 1 pm</td>
+                        <td>Confirmado</td>
+                        <td>#4056</td>
+                      </tr>
+                      <tr>
+                        <td>2/03/2025-6/03/2025 3 pm</td>
+                        <td>Preparación</td>
+                        <td>#7089</td>
+                      </tr>
+                      <tr>
+                        <td>Porta ac consectetur ac</td>
+                        <td>Pendiente</td>
+                        <td>Porta ac consectetur ac</td>
+                      </tr>
+                      <tr>
+                        <td>Vestibulum at eros</td>
+                        <td>Vestibulum at eros</td>
+                        <td>Vestibulum at eros</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="d-flex flex-column flex-md-row gap-3">
+                  <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#modalDespacho">Generar orden de despacho</button>
+                  <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#modalSolicitudesAnulacion">Solicitudes de anulación</button>
+                  <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#modalActualizarPedido">Actualizar pedido</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="productos" class="section-content d-none">
+            <div class="card card-user mb-4">
+              <div class="card-header">Productos</div>
+              <div class="card-body">
+                <div class="row g-4">
+                  <!-- Registrar nuevo arreglo -->
+                  <div class="col-md-5">
+                    <div class="border rounded p-3 mb-3" style="background:#f8f9fa;">
+                      <h6 class="mb-3">Registrar nuevo arreglo</h6>
+                      <form id="formNuevoProducto">
+                        <div class="mb-2">
+                          <label class="form-label mb-1">Nombre:</label>
+                          <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label mb-1">Precio:</label>
+                          <input type="number" class="form-control" required>
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label mb-1">Cantidad:</label>
+                          <input type="number" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label mb-1">Temporada:</label>
+                          <select class="form-select" required>
+                            <option value="">Seleccione...</option>
+                            <option>Primavera</option>
+                            <option>Verano</option>
+                            <option>Otoño</option>
+                            <option>Invierno</option>
+                          </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Registrar</button>
+                      </form>
+                    </div>
+                  </div>
+                  <!-- Productos en sistema -->
+                  <div class="col-md-3">
+                    <div class="border rounded p-3 mb-3" style="background:#f8f9fa;">
+                      <h6 class="mb-3">Productos en sistema</h6>
+                      <ul class="list-group">
+                        <li class="list-group-item py-1">Ramo de rosas</li>
+                        <li class="list-group-item py-1">Orquideas</li>
+                        <li class="list-group-item py-1">Girasol</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- Categorizar por temporada -->
+                  <div class="col-md-4">
+                    <div class="border rounded p-3 mb-3" style="background:#f8f9fa;">
+                      <h6 class="mb-3">Categorizar por temporada</h6>
+                      <form id="formCategoria">
+                        <div class="mb-2">
+                          <label class="form-label mb-1">Seleccione productos:</label>
+                          <select class="form-select mb-2" multiple required>
+                            <option>Ramo de rosas</option>
+                            <option>Orquideas</option>
+                            <option>Girasol</option>
+                          </select>
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label mb-1">Temporada:</label>
+                          <select class="form-select" required>
+                            <option value="">Choose...</option>
+                            <option>Primavera</option>
+                            <option>Verano</option>
+                            <option>Otoño</option>
+                            <option>Invierno</option>
+                          </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Cambiar</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="clientes" class="section-content d-none">
+            <div class="card card-user mb-4">
+              <div class="card-header">Clientes</div>
+              <div class="card-body">
+                <p>Gestión de clientes aquí.</p>
+              </div>
+            </div>
+          </div>
+          <div id="reportes" class="section-content d-none">
+            <div class="card card-user mb-4">
+              <div class="card-header">Reportes</div>
+              <div class="card-body">
+                <form id="formReporte">
+                  <div class="mb-3">
+                    <label class="form-label">Reportes de ventas</label>
+                  </div>
+                  <div class="row g-2 mb-3">
+                    <div class="col-md-4">
+                      <select class="form-select" required>
+                        <option value="">Ingrese el periodo a consultar</option>
+                        <option>01-02 al 28-02</option>
+                        <option>01-03 al 31-03</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select class="form-select">
+                        <option value="">Filtro por canal</option>
+                        <option>Ventas presenciales</option>
+                        <option>Ventas online</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <select class="form-select">
+                        <option value="">Tipo de producto</option>
+                        <option>Ramo de rosas</option>
+                        <option>Orquideas</option>
+                        <option>Girasol</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-primary" id="btnConsultar">Consultar</button>
+                </form>
+                <!-- Resultado del reporte (oculto hasta consultar) -->
+                <div id="reporteResultado" class="mt-4 d-none">
+                  <div class="card border-primary mb-3">
+                    <div class="card-header bg-primary text-white">Reporte</div>
+                    <div class="card-body">
+                      <h6 class="card-title">Ventas</h6>
+                      <p class="card-text">Aquí se mostrarán los resultados del reporte de ventas según los filtros seleccionados.</p>
+                      <div class="d-flex justify-content-end gap-2">
+                        <button class="btn btn-cancel" data-bs-toggle="modal" data-bs-target="#modalCancelarReporte">Cancel</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalExportar">imprimir</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="usuarios" class="section-content d-none">
+            <div class="card card-user mb-4">
+              <div class="card-header">Usuarios</div>
+              <div class="card-body">
+                <p>Seleccione una acción para gestionar usuarios.</p>
+                <div class="user-actions mt-4">
+                  <button class="btn btn-action" data-bs-toggle="modal" data-bs-target="#modalCrear">Crear usuario</button>
+                  <button class="btn btn-action" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar usuario</button>
+                  <button class="btn btn-action" data-bs-toggle="modal" data-bs-target="#modalEditar">Editar usuario</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="configuracion" class="section-content d-none">
+            <div class="card card-user mb-4">
+              <div class="card-header">Configuración</div>
+              <div class="card-body">
+                <p>Opciones de configuración aquí.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modals -->
+        <!-- Crear Usuario -->
+        <div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="modalCrearLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalCrearLabel">Crear usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row g-2 mb-3">
+                  <div class="col">
+                    <label class="form-label">Primer nombre:</label>
+                    <input type="text" class="form-control" required>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">Primer apellido:</label>
+                    <input type="text" class="form-control" required>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Correo electrónico:</label>
+                  <input type="email" class="form-control" required>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-action">Crear</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Eliminar Usuario -->
+        <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalEliminarLabel">Eliminar usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
+                <label class="form-label">Ingrese el identificador del usuario a eliminar:</label>
+                <input type="text" class="form-control mb-3" placeholder="#E1na01n12o" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-action">Eliminar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Editar Usuario -->
+        <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarLabel">Editar usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
+                <label class="form-label">Ingrese el identificador del usuario a actualizar sus datos:</label>
+                <input type="text" class="form-control mb-3" placeholder="#E1na01n12o" required>
+                <div class="row g-2 mb-3">
+                  <div class="col">
+                    <label class="form-label">Primer nombre:</label>
+                    <input type="text" class="form-control" required>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">Primer apellido:</label>
+                    <input type="text" class="form-control" required>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Correo electrónico:</label>
+                  <input type="email" class="form-control" required>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-action">Actualizar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Modal: Exportar ventas -->
+        <div class="modal fade" id="modalExportar" tabindex="-1" aria-labelledby="modalExportarLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalExportarLabel">Exportar ventas</h5>
+              </div>
+              <div class="modal-body">
+                Exportar en pdf
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal: Cancelar reporte -->
+        <div class="modal fade" id="modalCancelarReporte" tabindex="-1" aria-labelledby="modalCancelarReporteLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalCancelarReporteLabel">Reporte</h5>
+              </div>
+              <div class="modal-body">
+                Consulta cancelada.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal: Generar orden de despacho -->
+        <div class="modal fade" id="modalDespacho" tabindex="-1" aria-labelledby="modalDespachoLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalDespachoLabel">Generar orden de despacho para el pedido #4056</h5>
+              </div>
+              <div class="modal-body">
+                <div class="mb-2">
+                  <label class="form-label">Ramo de rosas</label>
+                  <input type="text" class="form-control" value="1 unidad" readonly>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Dirección de envío</label>
+                  <input type="text" class="form-control" value="Av. miami 2345">
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Fecha estimada</label>
+                  <input type="text" class="form-control" value="30/03/2025 1 pm">
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Chofer</label>
+                  <select class="form-select">
+                    <option>chofer</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalEstadoPreparacion">Crear e imprimir</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Modal: Solicitudes de anulación -->
+        <div class="modal fade" id="modalSolicitudesAnulacion" tabindex="-1" aria-labelledby="modalSolicitudesAnulacionLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <form class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalSolicitudesAnulacionLabel">Solicitudes de anulación</h5>
+              </div>
+              <div class="modal-body">
+                <div class="mb-2">
+                  <label class="form-label">Ramo de rosas</label>
+                  <input type="text" class="form-control" value="1 unidad" readonly>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Estado</label>
+                  <input type="text" class="form-control" value="Entregado" readonly>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Dirección de envío</label>
+                  <input type="text" class="form-control" value="Av. miami 2345" readonly>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Fecha estimada</label>
+                  <input type="text" class="form-control" value="30/03/2025 1 pm" readonly>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Chofer</label>
+                  <select class="form-select" disabled>
+                    <option>chofer</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer d-flex flex-row justify-content-between">
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Volver</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalEstadoNoAnulable">rechazar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalEstadoNoAnulable">aprobar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Modal: Estado - Pedido en preparación -->
+        <div class="modal fade" id="modalEstadoPreparacion" tabindex="-1" aria-labelledby="modalEstadoPreparacionLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalEstadoPreparacionLabel">Estado</h5>
+              </div>
+              <div class="modal-body">
+                Pedido en preparación
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal: Estado - Pedido entregado -->
+        <div class="modal fade" id="modalEstadoEntregado" tabindex="-1" aria-labelledby="modalEstadoEntregadoLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalEstadoEntregadoLabel">Estado</h5>
+              </div>
+              <div class="modal-body">
+                Pedido entregado
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal: Estado - No se puede anular un pedido entregado -->
+        <div class="modal fade" id="modalEstadoNoAnulable" tabindex="-1" aria-labelledby="modalEstadoNoAnulableLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalEstadoNoAnulableLabel">Estado</h5>
+              </div>
+              <div class="modal-body">
+                No se puede anular un pedido entregado
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <!-- Bootstrap JS & Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <script>
+    // Mostrar la sección correspondiente al hacer clic en el menú lateral
+    document.querySelectorAll('#sidebarMenu .nav-link').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('#sidebarMenu .nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelectorAll('.section-content').forEach(sec => sec.classList.add('d-none'));
+        document.getElementById(this.getAttribute('data-section')).classList.remove('d-none');
+      });
+    });
+
+    // Mostrar resultado del reporte al consultar
+    document.getElementById('btnConsultar').onclick = function() {
+      document.getElementById('reporteResultado').classList.remove('d-none');
+    };
+  </script>
+</body>
+</html>
