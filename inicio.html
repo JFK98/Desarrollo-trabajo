@@ -8,6 +8,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="js/api-contract.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/inicio.js"></script>
+
   <style>
     html, body {
       height: 100%;
@@ -60,6 +64,43 @@
       color: #222;
       text-align: center;
     }
+    /* Popover personalizado para el menú de cuenta */
+    .popover-account {
+      position: absolute;
+      z-index: 1050;
+      min-width: 220px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+      padding: 20px 15px 15px 15px;
+      display: none;
+    }
+    .popover-account{
+      /*width: 100%;
+      margin-bottom: 10px;
+      */
+      width: 2vw;
+      margin-top: auto;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: auto;
+    }
+
+    .navbar-brand img {
+      object-fit: contain;
+      width: 60px;
+      height: 60px;
+      margin-top: -20px;
+      margin-bottom: 0px;
+    }
+
+    .panel-body img {
+      height: 300px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
   </style>
 </head>
 <body>
@@ -67,7 +108,7 @@
   <div class="jumbotron">
     <div class="container text-center">
       <h1><img id="logo" alt="Logo" src="imagenes/Flor y Vida logo.jpg"></h1>      
-      <p>Mission, Vission & Values</p>
+      <p>Flores, Arreglos y Decoraciones</p>
     </div>
   </div>
 
@@ -79,45 +120,72 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
         </button>
-        <a class="navbar-brand" alt="logo" href="#">Logo</a>
+        <a class="navbar-brand" alt="logo" href="#"><img id="logo_2" alt="logo_icon" src="imagenes/Logo icono.png"></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="inicio.html">Inicio</a></li>
-          <li><a href="#">Quienes somos</a></li>
+          <li class="active"><a href="#">Inicio</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#modalAbout">¿Quienes somos?</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
-          <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+          <li style="position:relative;">
+            <a href="#" id="accountBtn">
+              <span class="glyphicon glyphicon-user"></span> <span id="cuentaActiva">Tu Cuenta</span>
+            </a>
+            <div id="popoverAccount" class="popover-account text-center">
+              <!-- Este contenido será reemplazado por el script -->
+            </div>
+
+
+            <!-- Popover personalizado -->
+            <div id="popoverAccount" class="popover-account text-center">
+              <a href="login.html" class="btn btn-primary btn-lg">Iniciar sesión</a>
+              <br>
+              <p>¿No tienes una cuenta?</p>
+              <a href="registro.html" class="btn btn-success btn-lg">Crear cuenta</a>
+            </div>
+          </li>
+          <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito</a></li>
         </ul>
       </div>
     </div>
   </nav>
+
   <h1 class="text-center">Productos</h1>
+  <!--Productos de ejemplo-->
   <div class="container">    
     <div class="row">
       <div class="col-sm-4">
         <div class="panel panel-primary">
-          <div class="panel-heading">Producto 1</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
+          <div class="panel-heading">ID 3046</div>
+          <div class="panel-body"><img src="imagenes/rosa.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Ramo de rosas de 20 rosas<br>50.000</div>
+          <button class="btn btn-success btn-block" data-id="3046"
+          data-nombre="Ramo de rosas"
+          data-precio="50000"
+          data-imagen="imagenes/rosa.jpg">Agregar al carrito</button>
         </div>
       </div>
       <div class="col-sm-4"> 
         <div class="panel panel-danger">
-          <div class="panel-heading">Producto 2</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
+          <div class="panel-heading">ID 3045</div>
+          <div class="panel-body"><img src="imagenes/rosa blanca.png" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Ramo de rosas blancas de 20 rosas<br>55.000</div>
+          <button class="btn btn-success btn-block" data-id="3046"
+          data-nombre="Ramo de rosas blancas"
+          data-precio="55000"
+          data-imagen="imagenes/rosa.jpg">Agregar al carrito</button>
         </div>
       </div>
       <div class="col-sm-4"> 
         <div class="panel panel-success">
-          <div class="panel-heading">Producto 3</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
+          <div class="panel-heading">ID 2070</div>
+          <div class="panel-body"><img src="imagenes/arreglo_funebre.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Arreglo floral funebre de rosas blancas<br>80.000</div>
+          <button class="btn btn-success btn-block" data-id="3046"
+          data-nombre="Arreglo funebre rosas blancas"
+          data-precio="80000"
+          data-imagen="imagenes/rosa.jpg">Agregar al carrito</button>
         </div>
       </div>
     </div>
@@ -216,5 +284,84 @@
   <p>Dirección <br>Comuna de Maipu <br>Av. no se llama 456</p>
 </footer>
 
+<!-- Modal Quienes Somos -->
+<div id="modalAbout" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#b65d5d; color:white;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">¿Quienes somos?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Somos Flor & Vida, una empresa dedicada a la creación de arreglos florales, decoraciones personalizadas y momentos inolvidables. Nuestro compromiso es ofrecer productos de calidad con un toque artístico y emocional.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(function() {
+  const $popover = $('#popoverAccount');
+  const $btn = $('#accountBtn');
+  const correo = localStorage.getItem('correo');
+
+  // Mostrar correo en el navbar
+  if (correo) {
+    $('#cuentaActiva').text(correo);
+  }
+
+  // Reemplazar contenido del popover si esta logueado
+  if (correo) {
+    $popover.html(`
+      <p>Sesión iniciada como:</p>
+      <strong>${correo}</strong><br><br>
+      <a href="pedidos.html" class="btn btn-info btn-lg">Ver mis pedidos</a><br><br>
+      <button id="cerrarSesion" class="btn btn-danger btn-lg">Cerrar sesión</button>
+    `);
+  } else {
+    $popover.html(`
+      <a href="login.html" class="btn btn-primary btn-lg">Iniciar sesión</a><br>
+      <p>¿No tienes una cuenta?</p>
+      <a href="registro.html" class="btn btn-success btn-lg">Crear cuenta</a>
+    `);
+  }
+
+ 
+  $btn.on('click', function(e) {
+    e.preventDefault();
+    $('.popover-account').not($popover).hide();
+    $popover.css({
+      top: $btn.parent().height(),
+      left: $btn.position().left - ($popover.outerWidth()/2) + ($btn.outerWidth()/2),
+      display: 'block'
+    });
+    return false;
+  });
+
+ 
+  $(document).on('mousedown', function(e) {
+    if (!$(e.target).closest('#popoverAccount, #accountBtn').length) {
+      $popover.hide();
+    }
+  });
+
+  $(window).on('scroll resize', function() {
+    $popover.hide();
+  });
+
+  // Cerrar sesión
+  $(document).on('click', '#cerrarSesion', function() {
+    localStorage.clear();
+    window.location.href = 'inicio.html';
+  });
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('token');
+  const rol = localStorage.getItem('rol');
+
+});
+</script>
 </body>
 </html>

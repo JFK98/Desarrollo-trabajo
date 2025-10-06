@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <title>Registro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap 3 CDN -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="js/api-contract.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/registro.js"></script>
   <style>
     body {
       background: #fff;
@@ -71,6 +73,18 @@
       color: #222;
       text-align: center;
     }
+    #logo {
+      width: 15vw;
+      height: 8vw;
+    }
+    .navbar-brand img {
+      object-fit: contain;
+      width: 60px;
+      height: 60px;
+      margin-top: -20px;
+      margin-bottom: 0px;
+    }
+
   </style>
 </head>
 <body>
@@ -78,7 +92,7 @@
   <div class="jumbotron">
     <div class="container text-center">
       <h1><img id="logo" alt="logo" src="imagenes/Flor y Vida logo.jpg"></h1>      
-      <p>Mission, Vission & Values</p>
+      <p>Flores, Arreglos y Decoraciones</p>
     </div>
   </div>
   <!-- Navbar Bootstrap 3 -->
@@ -90,7 +104,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
         </button>
-        <a class="navbar-brand" alt="logo" href="#">Logo</a>
+        <a class="navbar-brand" alt="logo" href="#"><img alt="logo icon" src="imagenes/Logo icono.png"></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
@@ -98,8 +112,8 @@
           <li><a href="#">Quienes somos</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li class="active"><a href="registro.html"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
-          <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+          <li class="active"><a href="#"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
+          <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito</a></li>
         </ul>
       </div>
     </div>
@@ -108,7 +122,7 @@
   <div class="container">
     <div class="registro-panel">
       <h3>Registro de usuario</h3>
-      <form>
+      <form id="registroForm">
         <div class="form-group">
           <label for="usuario" class="form-label">Usuario:</label>
           <input type="email" class="form-control" id="usuario" placeholder="example@gmail.com" required>
@@ -121,6 +135,7 @@
           <label for="telefono" class="form-label">Numero de telefono:</label>
           <input type="tel" class="form-control" id="telefono" placeholder="ingrese su numero telefonico" required>
         </div>
+        <!--Aqui se llama a la API para insertar un usuario nuevo con los campos anteriores-->
         <button type="submit" class="btn btn-registro">Crear cuenta</button>
       </form>
     </div>

@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <title>Pedidos - Flor y Vida</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap 3 CDN -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="js/api-contract.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/pedidos.js"></script>
+
   <style>
     html, body {
       height: 100%;
@@ -109,6 +112,31 @@
       color: #222;
       text-align: center;
     }
+    .popover-account {
+      position: absolute;
+      z-index: 1050;
+      min-width: 220px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+      padding: 20px 15px 15px 15px;
+      display: none;
+    }
+    #logo {
+      width: 15vw;
+      height: 8vw;
+    }
+
+    .navbar-brand img {
+      object-fit: contain;
+      width: 60px;
+      height: 60px;
+      margin-top: -20px;
+      margin-bottom: 0px;
+    }
+
+
   </style>
 </head>
 <body>
@@ -116,7 +144,7 @@
   <div class="jumbotron">
     <div class="container text-center">
       <h1><img id="logo" alt="logo" src="imagenes/Flor y Vida logo.jpg"></h1>      
-      <p>Mission, Vission & Values</p>
+      <p>Flores, Arreglos y Decoraciones</p>
     </div>
   </div>
   <!-- Navbar Bootstrap 3 -->
@@ -128,16 +156,27 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
         </button>
-        <a class="navbar-brand" alt="logo" href="#">Logo</a>
+        <a class="navbar-brand" alt="logo" href="#"><img alt="logo icon" src="imagenes/Logo icono.png"></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li><a href="inicio.html">Inicio</a></li>
-          <li><a href="#">Quienes somos</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#modalAbout">¿Quienes somos?</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
-          <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+          <li style="position:relative;">
+            <a href="#" id="accountBtn">
+              <span class="glyphicon glyphicon-user"></span> <span id="cuentaActiva">Tu Cuenta</span>
+            </a>
+            <!-- Popover personalizado -->
+            <div id="popoverAccount" class="popover-account text-center">
+              <a href="login.html" class="btn btn-primary btn-lg">Iniciar sesión</a>
+              <br>
+              <p>¿No tienes una cuenta?</p>
+              <a href="registro.html" class="btn btn-success btn-lg">Crear cuenta</a>
+            </div>
+          </li>
+          <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito</a></li>
         </ul>
       </div>
     </div>
@@ -145,9 +184,11 @@
   <!-- Contenido principal -->
   <div class="container">
     <div class="pedido-panel">
+      <!--El id del pedido tiene que ser llamado de la API-->>
       <h3>Detalle del Pedido #901732</h3>
       <div class="row">
         <div class="col-xs-12 col-sm-6">
+          <!--Aqui el estado tiene que llamar a la API al igual que el resto de campos-->
           <span class="badge badge-custom">Estado: pendiente</span>
         </div>
         <div class="col-xs-12 col-sm-6">
@@ -174,6 +215,24 @@
       <button type="button" class="btn btn-anular" data-toggle="modal" data-target="#modalAnular">Anular pedido</button>
     </div>
   </div>
+
+  <!-- Modal Quienes Somos -->
+<div id="modalAbout" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#b65d5d; color:white;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <li><a href="#" data-toggle="modal" data-target="#modalAbout">Quienes somos</a></li>
+      </div>
+      <div class="modal-body">
+        <p>Somos Flor & Vida, una empresa dedicada a la creación de arreglos florales, decoraciones personalizadas y momentos inolvidables. Nuestro compromiso es ofrecer productos de calidad con un toque artístico y emocional.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Modal: Anular pedido -->
   <div class="modal fade" id="modalAnular" tabindex="-1" role="dialog" aria-labelledby="modalAnularLabel">
     <div class="modal-dialog" role="document">
@@ -254,6 +313,101 @@
       $('#modalAnulacion').modal('show');
     }, 400);
   });
+</script>
+<script>
+  $(function() {
+    var $popover = $('#popoverAccount');
+    var $btn = $('#accountBtn');
+    var hideTimeout;
+
+    
+    $btn.on('click', function(e) {
+      e.preventDefault();
+      
+      $('.popover-account').not($popover).hide();
+      
+      var offset = $btn.offset();
+      var height = $btn.outerHeight();
+      var left = $btn.position().left;
+      $popover.css({
+        top: $btn.parent().height(),
+        left: $btn.position().left - ($popover.outerWidth()/2) + ($btn.outerWidth()/2),
+        display: 'block'
+      });
+      
+      return false;
+    });
+
+    
+    $(document).on('mousedown', function(e) {
+      if (!$(e.target).closest('#popoverAccount, #accountBtn').length) {
+        $popover.hide();
+      }
+    });
+
+   
+    $(window).on('scroll resize', function() {
+      $popover.hide();
+    });
+  });
+</script>
+<script>
+$(function() {
+  const $popover = $('#popoverAccount');
+  const $btn = $('#accountBtn');
+  const correo = localStorage.getItem('correo');
+
+  // Mostrar correo en el navbar
+  if (correo) {
+    $('#cuentaActiva').text(correo);
+  }
+
+  // Reemplazar contenido del popover si esta logueado
+  if (correo) {
+    $popover.html(`
+      <p>Sesión iniciada como:</p>
+      <strong>${correo}</strong><br><br>
+      <a href="pedidos.html" class="btn btn-info btn-lg">Ver mis pedidos</a><br><br>
+      <button id="cerrarSesion" class="btn btn-danger btn-lg">Cerrar sesión</button>
+    `);
+  } else {
+    $popover.html(`
+      <a href="login.html" class="btn btn-primary btn-lg">Iniciar sesión</a><br>
+      <p>¿No tienes una cuenta?</p>
+      <a href="registro.html" class="btn btn-success btn-lg">Crear cuenta</a>
+    `);
+  }
+
+  
+  $btn.on('click', function(e) {
+    e.preventDefault();
+    $('.popover-account').not($popover).hide();
+    $popover.css({
+      top: $btn.parent().height(),
+      left: $btn.position().left - ($popover.outerWidth()/2) + ($btn.outerWidth()/2),
+      display: 'block'
+    });
+    return false;
+  });
+
+  
+  $(document).on('mousedown', function(e) {
+    if (!$(e.target).closest('#popoverAccount, #accountBtn').length) {
+      $popover.hide();
+    }
+  });
+
+  $(window).on('scroll resize', function() {
+    $popover.hide();
+  });
+
+  // Cerrar sesión
+  $(document).on('click', '#cerrarSesion', function() {
+    sessionStorage.setItem('desdeLogout', 'true');
+    localStorage.clear();
+    window.location.href = 'inicio.html';
+  });
+});
 </script>
 </body>
 </html>
