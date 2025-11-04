@@ -2,10 +2,6 @@ const { Router } = require('express');
 const Pedido = require('../models/Pedido');
 const router = Router();
 
-/**
- * Generar reporte de ventas
- * GET /api/reportes?tipo=diario|mensual|anual
- */
 router.get('/', async (req, res) => {
   try {
     const { tipo } = req.query;
