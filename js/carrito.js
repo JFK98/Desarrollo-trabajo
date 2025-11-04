@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Cargar carrito al iniciar
     actualizarCarritoUI();
-
-    // Event delegation para los botones de cantidad y eliminar
     document.getElementById('carritoItems').addEventListener('click', (e) => {
         const target = e.target;
         
@@ -15,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Listener para el formulario de pago
     const formPago = document.getElementById('formPago');
     if (formPago) {
         formPago.addEventListener('submit', handlePago);
@@ -106,7 +103,7 @@ async function handlePago(e) {
     e.preventDefault();
     
     const direccion = document.getElementById('direccion').value;
-    const usuarioId = localStorage.getItem('userId'); // 👈 guardado en login
+    const usuarioId = localStorage.getItem('userId'); 
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
     try {
