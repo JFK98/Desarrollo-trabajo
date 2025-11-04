@@ -2,7 +2,7 @@ const express = require('express');
 const Producto = require('../models/Producto');
 const router = express.Router();
 
-// 📌 Listar productos
+//Listar productos
 router.get('/', async (req, res) => {
   try {
     const productos = await Producto.find();
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 📌 Crear producto
+//Crear producto
 router.post('/', async (req, res) => {
   try {
     const { nombre, precio, imagen } = req.body;
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// 📌 Actualizar producto
+//Actualizar producto
 router.put('/:id', async (req, res) => {
   try {
     const { nombre, precio, imagen } = req.body;
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// 📌 Eliminar producto
+//Eliminar producto
 router.delete('/:id', async (req, res) => {
   try {
     const producto = await Producto.findByIdAndDelete(req.params.id);
