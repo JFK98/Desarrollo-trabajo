@@ -101,7 +101,7 @@ async function handleCreateProduct(e) {
 async function loadProducts() {
   try {
     const data = await apiFetch(API_CONTRACT.productos.listar);
-    console.log("Productos recibidos:", data); // 👈 depuración
+    console.log("Productos recibidos:", data); 
 
     const productos = data.productos || [];
     const tbody = document.querySelector("#productosTable tbody");
@@ -125,7 +125,7 @@ async function loadProducts() {
 async function loadOrders() {
   try {
     const data = await apiFetch(API_CONTRACT.pedidos.listar);
-    console.log("Pedidos recibidos:", data); // 👈 depuración
+    console.log("Pedidos recibidos:", data); 
 
     // El backend devuelve { ok: true, pedidos: [...] }
     const pedidos = data.pedidos || [];
@@ -287,7 +287,7 @@ function displayReport(data, container) {
 }
 
 
-// 📌 Cargar lista de usuarios en la tabla
+//Cargar lista de usuarios en la tabla
 async function loadUsers() {
   try {
     const data = await apiFetch(API_CONTRACT.usuarios.listar); // GET /api/usuarios
@@ -311,7 +311,7 @@ async function loadUsers() {
   }
 }
 
-// 📌 Eliminar usuario
+//Eliminar usuario
 async function eliminarUsuario(id) {
   if (!confirm("¿Seguro que deseas eliminar este usuario?")) return;
 
