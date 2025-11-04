@@ -2,7 +2,7 @@ const express = require('express');
 const Carrito = require('../models/Carrito');
 const router = express.Router();
 
-// Obtener carrito de un usuario
+
 router.get('/:usuarioId', async (req, res) => {
   try {
     const carrito = await Carrito.findOne({ usuarioId: req.params.usuarioId });
