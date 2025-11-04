@@ -1,10 +1,8 @@
 const express = require('express');
-const Usuario = require('../models/Usuario'); // Importa el modelo de usuarios
+const Usuario = require('../models/Usuario'); 
 const router = express.Router();
 
-/**
- * 🔹 Ruta de login
- */
+
 router.post('/login', async (req, res) => {
   try {
     const { correo, password } = req.body;
@@ -16,7 +14,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ ok: false, msg: 'Credenciales inválidas' });
     }
 
-    // Respuesta con datos del usuario (sin password)
+    
     res.json({
       ok: true,
       usuario: {
@@ -34,9 +32,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-/**
- * 🔹 Ruta de registro
- */
+
 router.post('/registro', async (req, res) => {
   try {
     const { nombre, correo, password, rol, telefono } = req.body;
@@ -51,7 +47,7 @@ router.post('/registro', async (req, res) => {
     const nuevoUsuario = await Usuario.create({
       nombre,
       correo,
-      password, // ⚠️ En producción deberías encriptar con bcrypt
+      password, 
       rol: rol || 'cliente',
       telefono
     });
@@ -71,11 +67,7 @@ router.post('/registro', async (req, res) => {
   }
 });
 
-/**
- * 🔹 Ruta de logout
- * (En JWT no es estrictamente necesario, basta con borrar el token en el frontend.
- *  Aquí devolvemos una respuesta para que tu frontend no falle.)
- */
+
 router.post('/logout', (req, res) => {
   res.json({ ok: true, msg: 'Sesión cerrada correctamente' });
 });
