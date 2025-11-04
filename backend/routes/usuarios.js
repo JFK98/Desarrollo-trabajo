@@ -2,7 +2,7 @@ const express = require('express');
 const Usuario = require('../models/Usuario');
 const router = express.Router();
 
-// 📌 Crear usuario
+//Crear usuario
 router.post('/', async (req, res) => {
   try {
     const { nombre, correo, password, rol } = req.body;
@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
     const nuevoUsuario = new Usuario({
       nombre,
       correo,
-      password: password || '123456', // ⚠️ idealmente encriptar con bcrypt
+      password: password || '123456', 
       rol: rol || 'encargado'
     });
 
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// 📌 Listar todos los usuarios (sin password)
+//Listar todos los usuarios 
 router.get('/', async (req, res) => {
   try {
     const usuarios = await Usuario.find().select('-password');
@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 📌 Obtener usuario por ID (sin password)
+//Obtener usuario por ID
 router.get('/:id', async (req, res) => {
   try {
     const usuario = await Usuario.findById(req.params.id).select('-password');
@@ -52,7 +52,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// 📌 Actualizar usuario por ID
+//Actualizar usuario por ID
 router.put('/:id', async (req, res) => {
   try {
     const { nombre, correo, rol } = req.body;
@@ -73,7 +73,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// 📌 Eliminar usuario por ID
+//Eliminar usuario por ID
 router.delete('/:id', async (req, res) => {
   try {
     const usuario = await Usuario.findByIdAndDelete(req.params.id);
