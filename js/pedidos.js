@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    // Cargar detalles del pedido
     const pedidoId = getPedidoIdFromUrl();
     const pedido = await apiFetch(API_CONTRACT.pedidos.obtener(pedidoId));
     mostrarDetallePedido(pedido);
 
-    // Listener para anulación
     document.getElementById('formAnular').addEventListener('submit', async (e) => {
       e.preventDefault();
       const motivo = document.getElementById('motivo').value === 'Otro'
@@ -29,12 +27,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function getPedidoIdFromUrl() {
-  // Obtener ID del pedido de la URL
-  return '901732'; // Por ahora hardcoded
+  return '901732';
 }
 
 function mostrarDetallePedido(pedido) {
-  // Actualizar UI con detalles del pedido
   document.querySelector('.badge-custom').textContent = `Estado: ${pedido.estado}`;
-  // ... más actualizaciones de UI
 }
