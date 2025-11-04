@@ -26,14 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(data.msg || "Credenciales inválidas");
       }
 
-      // Guardar datos en localStorage
-      // ⚠️ Tu backend no devuelve token todavía, así que esta línea no sirve:
-      // localStorage.setItem("token", data.token);
-
       localStorage.setItem("correo", data.usuario.correo);
       localStorage.setItem("rol", data.usuario.rol);
       localStorage.setItem("nombre", data.usuario.nombre);
-      localStorage.setItem("userId", data.usuario.id); // 👈 corregido
+      localStorage.setItem("userId", data.usuario.id); 
 
       // Redirigir según rol
       if (data.usuario.rol === "admin") {
