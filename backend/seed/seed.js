@@ -17,7 +17,7 @@ const Producto = require('../models/Producto');
         rol: 'admin',
         telefono: '987654321'
       });
-      console.log('✅ Usuario admin creado');
+      console.log('Usuario admin creado');
     }
 
     // Insertar productos de ejemplo si no hay
@@ -27,13 +27,13 @@ const Producto = require('../models/Producto');
         { nombre: 'Ramo de rosas', precio: 50000, stock: 10, categoria: 'Flores' },
         { nombre: 'Ramo de rosas blancas', precio: 55000, stock: 8, categoria: 'Flores' }
       ]);
-      console.log('✅ Productos de ejemplo insertados');
+      console.log('Productos de ejemplo insertados');
     }
 
     await mongoose.disconnect();
     process.exit(0);
   } catch (err) {
-    console.error('❌ Error en seed:', err);
+    console.error('Error en seed:', err);
     process.exit(1);
   }
 })();
