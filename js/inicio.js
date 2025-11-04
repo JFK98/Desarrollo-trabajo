@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Agregar listener a todos los botones de "Agregar al carrito"
     document.querySelectorAll('.btn-success').forEach(button => {
         button.addEventListener('click', addToCart);
     });
@@ -20,17 +19,17 @@ function addToCart(event) {
     try {
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         
-        // Buscar producto por ID único
+        // Buscar producto por ID
         const existingProductIndex = carrito.findIndex(item => item.id === productData.id);
         
         if (existingProductIndex >= 0) {
             carrito[existingProductIndex].cantidad += 1;
         } else {
-            carrito.push({...productData}); // Usar spread para evitar referencias
+            carrito.push({...productData});
         }
 
         localStorage.setItem('carrito', JSON.stringify(carrito));
-        console.log('Carrito actualizado:', carrito); // Para debugging
+        console.log('Carrito actualizado:', carrito); 
         alert('Producto agregado al carrito exitosamente');
 
     } catch (error) {
