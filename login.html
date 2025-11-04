@@ -58,17 +58,17 @@
           <div class="login-title">Sign In</div>
           <div class="mb-3">
             <label for="email" class="form-label">Correo electrónico:</label>
-            <input type="email" class="form-control" id="email" placeholder="admin@florvida.cl" required>
+            <input type="email" class="form-control" id="email" name="correo" placeholder="admin@florvida.cl" required>
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
-            <input type="password" class="form-control" id="password" placeholder="********" required>
+            <input type="password" class="form-control" id="password" name="password" placeholder="********" required>
           </div>
           <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="keepSession">
             <label class="form-check-label" for="keepSession">Mantener sesión iniciada</label>
           </div>
-          <button type="submit" class="btn btn-login mb-2">Iniciar sesión</button>
+          <button type="submit" id="submitBtn" class="btn btn-login mb-2">Iniciar sesión</button>
         </form>
         <button id="loginAdmin" style="display:none;">Login Admin</button>
         <button id="loginCliente" style="display:none;">Login Cliente</button>

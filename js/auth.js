@@ -1,53 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const desdeLogout = sessionStorage.getItem('desdeLogout');
-  const pagina = window.location.pathname.split('/').pop();
+  const loginForm = document.getElementById('loginForm');
+  
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(loginForm);
+      
+      try {
+        const response = await apiFetch(API_CONTRACT.auth.login, {
+          body: {
+            correo: formData.get('correo'),
+            password: formData.get('password')
+          }
+        });
 
-  if (desdeLogout && pagina === 'inicio.html') {
-    sessionStorage.removeItem('desdeLogout'); 
-    return; 
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('correo', response.usuario.correo);
+        localStorage.setItem('rol', response.usuario.rol);
+
+        window.location.href = 'inicio.html';
+
+      } catch (error) {
+        console.error('Error login:', error);
+        alert('Error al iniciar sesión');
+      }
+    });
   }
-
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-
-    const logout = sessionStorage.getItem('logout');
-    const pagina = window.location.pathname.split('/').pop();
-
-    if (logout && pagina === 'inicio.html') {
-    sessionStorage.removeItem('logout'); 
-    return; 
-    }
-  const token = localStorage.getItem('token');
-  const rol = localStorage.getItem('rol');
-  const correo = localStorage.getItem('correo');
-
-  
-  const pagina = window.location.pathname.split('/').pop();
-
-  
-  const reglas = {
-    'administracion.html': 'administrador',
-    'carrito.html': 'cliente'
-    
-  };
-
-  const rolRequerido = reglas[pagina];
-
-  
-  if (!rolRequerido) {
-    return;
+async function logout() {
+  try {
+    await apiFetch(API_CONTRACT.auth.logout);
+    localStorage.clear();
+    window.location.href = 'inicio.html';
+  } catch (error) {
+    console.error('Error logout:', error);
   }
-
-  if (!token || !rol || rol !== rolRequerido) {
-    alert('Acceso no autorizado');
-    window.location.href = 'login.html';
-    return;
-  }
-
- 
-  const iconoUsuario = document.querySelector('.bi-person-circle');
-  if (iconoUsuario && correo) {
-    iconoUsuario.insertAdjacentHTML('afterend', `<span style="margin-left:10px;">${correo}</span>`);
-  }
-});
+}

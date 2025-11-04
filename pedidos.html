@@ -170,10 +170,6 @@
             </a>
             <!-- Popover personalizado -->
             <div id="popoverAccount" class="popover-account text-center">
-              <a href="login.html" class="btn btn-primary btn-lg">Iniciar sesión</a>
-              <br>
-              <p>¿No tienes una cuenta?</p>
-              <a href="registro.html" class="btn btn-success btn-lg">Crear cuenta</a>
             </div>
           </li>
           <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito</a></li>
@@ -183,36 +179,8 @@
   </nav>
   <!-- Contenido principal -->
   <div class="container">
-    <div class="pedido-panel">
-      <!--El id del pedido tiene que ser llamado de la API-->>
-      <h3>Detalle del Pedido #901732</h3>
-      <div class="row">
-        <div class="col-xs-12 col-sm-6">
-          <!--Aqui el estado tiene que llamar a la API al igual que el resto de campos-->
-          <span class="badge badge-custom">Estado: pendiente</span>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-          <span class="badge badge-custom">Producto: ramo de rosas</span>
-        </div>
-      </div>
-      <br>
-      <div class="form-group">
-        <label class="form-label">Total:</label>
-        <input type="text" class="form-control" value="34.000" readonly>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Quien recibe:</label>
-        <input type="text" class="form-control" value="No no se llama" readonly>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Dirección de destino:</label>
-        <input type="text" class="form-control" value="Av. calle falsa 2003" readonly>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Fecha estimada de llegada:</label>
-        <input type="text" class="form-control" value="14/02/2025 a las 10:00 am" readonly>
-      </div>
-      <button type="button" class="btn btn-anular" data-toggle="modal" data-target="#modalAnular">Anular pedido</button>
+    <div class="pedido-panel" id="pedidoDetalle">
+      <p>Cargando pedido...</p>
     </div>
   </div>
 
@@ -406,6 +374,98 @@ $(function() {
     sessionStorage.setItem('desdeLogout', 'true');
     localStorage.clear();
     window.location.href = 'inicio.html';
+  });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const usuarioId = localStorage.getItem("userId");
+  if (!usuarioId) {
+    document.getElementById("pedidoDetalle").innerHTML = "<p>No has iniciado sesión.</p>";
+    return;
+  }
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/pedidos/${usuarioId}`);
+    const data = await res.json();
+
+    if (data.ok) {
+      // Filtrar pedidos que no estén anulados
+      const pedidosActivos = data.pedidos.filter(p => p.estado !== "anulado");
+
+      if (pedidosActivos.length > 0) {
+        const pedido = pedidosActivos[pedidosActivos.length - 1]; // último activo
+
+        document.getElementById("pedidoDetalle").innerHTML = `
+          <h3>Detalle del Pedido #${pedido._id}</h3>
+          <span class="badge badge-custom">Estado: ${pedido.estado}</span><br>
+          <span class="badge badge-custom">Productos: ${pedido.items.map(p => p.nombre + " x" + p.cantidad).join(", ")}</span>
+          <div class="form-group"><label>Total:</label>
+            <input type="text" class="form-control" value="$${pedido.total}" readonly>
+          </div>
+          <div class="form-group"><label>Dirección:</label>
+            <input type="text" class="form-control" value="${pedido.direccion}" readonly>
+          </div>
+          <div class="form-group"><label>Fecha:</label>
+            <input type="text" class="form-control" value="${new Date(pedido.createdAt).toLocaleString()}" readonly>
+          </div>
+          <button type="button" class="btn btn-anular" data-toggle="modal" data-target="#modalAnular">
+            Anular pedido
+          </button>
+        `;
+      } else {
+        document.getElementById("pedidoDetalle").innerHTML = "<p>No tienes pedidos activos.</p>";
+      }
+    } else {
+      document.getElementById("pedidoDetalle").innerHTML = "<p>Error al cargar pedidos.</p>";
+    }
+  } catch (err) {
+    console.error(err);
+    document.getElementById("pedidoDetalle").innerHTML = "<p>Error al cargar el pedido.</p>";
+  }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const formAnular = document.getElementById("formAnular");
+
+  formAnular.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const pedidoId = localStorage.getItem("ultimoPedidoId"); // guardado al comprar
+    const motivo = document.getElementById("motivo").value === "Otro"
+      ? document.getElementById("motivoOtro").value
+      : document.getElementById("motivo").value;
+
+    if (!pedidoId) {
+      alert("No se encontró el pedido a anular");
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/pedidos/${pedidoId}/anular`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ motivo })
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        $('#modalAnular').modal('hide');
+        setTimeout(() => {
+          $('#modalAnulacion').modal('show');
+        }, 400);
+
+        // Actualizar estado en pantalla
+        document.querySelector(".badge-custom").textContent = "Estado: anulado";
+      } else {
+        alert("Error al anular pedido: " + (data.msg || "desconocido"));
+      }
+    } catch (err) {
+      console.error("Error anulando pedido:", err);
+      alert("No se pudo anular el pedido");
+    }
   });
 });
 </script>

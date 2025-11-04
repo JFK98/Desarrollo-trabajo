@@ -1,37 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('form');
-  const emailInput = document.getElementById('email');
-  const passwordInput = document.getElementById('password');
+  const loginForm = document.getElementById('loginForm');
 
-  // manejo de roles para acceder a la pagina correcta
-  form.addEventListener('submit', async e => {
+  loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const correo = emailInput.value.trim();
-    const password = passwordInput.value;
-    try {
-      const data = await apiFetch(API_CONTRACT.login, { body: { correo, password } });
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('rol', data.usuario.rol);
-      localStorage.setItem('correo', data.usuario.correo);
-      window.location.href = data.usuario.rol === 'administrador' ? 'administracion.html' : 'inicio.html';
-    } catch (err) {
-      alert(err.body?.error || 'Credenciales inválidas');
+
+    const formData = new FormData(loginForm);
+    const correo = formData.get('correo').trim();
+    const password = formData.get('password');
+
+    if (!correo || !password) {
+      alert("Por favor complete todos los campos");
+      return;
     }
-  });
 
-  // login como administrador de prueba
-  document.getElementById('loginAdmin').addEventListener('click', () => {
-    localStorage.setItem('token', 'fake-token-admin');
-    localStorage.setItem('rol', 'administrador');
-    localStorage.setItem('correo', 'admin@floryvida.cl');
-    window.location.href = 'administracion.html';
-  });
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ correo, password })
+      });
 
-  // login como cliente de prueba
-  document.getElementById('loginCliente').addEventListener('click', () => {
-    localStorage.setItem('token', 'fake-token-cliente');
-    localStorage.setItem('rol', 'cliente');
-    localStorage.setItem('correo', 'cliente@floryvida.cl');
-    window.location.href = 'inicio.html';
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.msg || "Credenciales inválidas");
+      }
+
+      // Guardar datos en localStorage
+      // ⚠️ Tu backend no devuelve token todavía, así que esta línea no sirve:
+      // localStorage.setItem("token", data.token);
+
+      localStorage.setItem("correo", data.usuario.correo);
+      localStorage.setItem("rol", data.usuario.rol);
+      localStorage.setItem("nombre", data.usuario.nombre);
+      localStorage.setItem("userId", data.usuario.id); // 👈 corregido
+
+      // Redirigir según rol
+      if (data.usuario.rol === "admin") {
+        window.location.href = "administracion.html";
+      } else {
+        window.location.href = "inicio.html";
+      }
+
+    } catch (err) {
+      alert(err.message || "Error al iniciar sesión");
+      loginForm.reset();
+    }
   });
 });

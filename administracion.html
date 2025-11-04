@@ -5,9 +5,13 @@
   <title>Administración - Flor y Vida</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="js/api-contract.js"></script>
   <script src="js/api-client.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/administracion.js"></script>
   <style>
     body {
       background: #f7f7f7;
@@ -98,501 +102,313 @@
   </style>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <!-- Sidebar -->
-      <nav class="col-2 sidebar d-flex flex-column p-0">
-        <div class="topbar d-block d-md-none">
-          <span>Administración</span>
-        </div>
-        <ul class="nav flex-column mt-4" id="sidebarMenu">
-          <li class="nav-item"><a class="nav-link active" data-section="dashboard">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" data-section="pedidos">Pedidos</a></li>
-          <li class="nav-item"><a class="nav-link" data-section="productos">Productos</a></li>
-          <li class="nav-item"><a class="nav-link" data-section="clientes">Clientes</a></li>
-          <li class="nav-item"><a class="nav-link" data-section="reportes">Reportes</a></li>
-          <li class="nav-item"><a class="nav-link" data-section="usuarios">Usuarios</a></li>
-          <li class="nav-item"><a class="nav-link" data-section="configuracion">Configuración</a></li>
-        </ul>
-        <button class="btn btn-danger mt-auto" id="btnCerrarSesion">Cerrar sesión</button>
-      </nav>
-      <!-- Main Content -->
-      <main class="col-10 px-0">
-        <!-- Topbar -->
-        <div class="topbar d-none d-md-flex">
-          <span style="font-size:1.2rem;font-weight:600;">Administración</span>
-          <span>
-            <i class="bi bi-bell icon"></i>
-            <i class="bi bi-person-circle icon"></i>
-          </span>
-        </div>
-        <div class="container py-4">
-          <!-- Secciones de contenido -->
-          <div id="dashboard" class="section-content">
-            <div class="card card-user mb-4">
-              <div class="card-header">Dashboard</div>
-              <div class="card-body">
-                <p>Bienvenido al panel de administración.</p>
-              </div>
-            </div>
-          </div>
-          <div id="pedidos" class="section-content d-none">
-            <div class="card card-user mb-4">
-              <div class="card-header">Pedidos</div>
-              <div class="card-body">
-                <h6 class="mb-3">Pedidos confirmados listos para preparación</h6>
-                <div class="d-flex justify-content-end mb-2">
-                  <!--Llamar a la API para refrescar los pedidos-->
-                  <button class="btn btn-primary btn-sm">Actualizar lista</button>
-                </div>
-                <div class="table-responsive mb-4">
-                  <table class="table table-bordered align-middle">
-                    <thead class="table-light">
-                      <tr>
-                        <th>Fecha de pedido</th>
-                        <th>Estado</th>
-                        <th>Cliente</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>23/03/2025 - 27/03/2025 10am</td>
-                        <td>Entregado</td>
-                        <td>#1234</td>
-                      </tr>
-                      <tr>
-                        <td>24/03/2025-30/03/2025 1 pm</td>
-                        <td>Confirmado</td>
-                        <td>#4056</td>
-                      </tr>
-                      <tr>
-                        <td>2/03/2025-6/03/2025 3 pm</td>
-                        <td>Preparación</td>
-                        <td>#7089</td>
-                      </tr>
-                      <tr>
-                        <td>Porta ac consectetur ac</td>
-                        <td>Pendiente</td>
-                        <td>Porta ac consectetur ac</td>
-                      </tr>
-                      <tr>
-                        <td>Vestibulum at eros</td>
-                        <td>Vestibulum at eros</td>
-                        <td>Vestibulum at eros</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="d-flex flex-column flex-md-row gap-3">
-                  <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#modalDespacho">Generar orden de despacho</button>
-                  <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#modalSolicitudesAnulacion">Solicitudes de anulación</button>
-                  <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#modalActualizarPedido">Actualizar pedido</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="productos" class="section-content d-none">
-            <div class="card card-user mb-4">
-              <div class="card-header">Productos</div>
-              <div class="card-body">
-                <div class="row g-4">
-                  <!-- Registrar nuevo arreglo -->
-                  <div class="col-md-5">
-                    <div class="border rounded p-3 mb-3" style="background:#f8f9fa;">
-                      <h6 class="mb-3">Registrar nuevo arreglo</h6>
-                      <form id="formNuevoProducto">
-                        <div class="mb-2">
-                          <label class="form-label mb-1">Nombre:</label>
-                          <input type="text" class="form-control" required>
+    <div class="container-fluid">
+        <header class="d-flex justify-content-between align-items-center py-3">
+            <h1>Panel de Administración</h1>
+            <button id="btnCerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
+        </header>
+
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 bg-light sidebar">
+            <ul class="nav flex-column" id="sidebarMenu">
+                <li class="nav-item">
+                <a class="nav-link active" href="#" data-section="dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#" data-section="usuarios">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#" data-section="productos">Productos</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#" data-section="pedidos">Pedidos</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#" data-section="reportes">Reportes</a>
+                </li>
+            </ul>
+            </nav>
+
+            <!-- Contenido principal -->
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            
+            <!-- Dashboard -->
+            <div id="dashboard" class="section-content">
+                <h2>Dashboard</h2>
+                <div id="dashboardStats">
+                <div class="row">
+                    <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                        <h5 class="card-title">Total Ventas</h5>
+                        <p id="totalVentas" class="card-text">$0</p>
                         </div>
-                        <div class="mb-2">
-                          <label class="form-label mb-1">Precio:</label>
-                          <input type="number" class="form-control" required>
-                        </div>
-                        <div class="mb-2">
-                          <label class="form-label mb-1">Cantidad:</label>
-                          <input type="number" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label mb-1">Temporada:</label>
-                          <select class="form-select" required>
-                            <option value="">Seleccione...</option>
-                            <option>Primavera</option>
-                            <option>Verano</option>
-                            <option>Otoño</option>
-                            <option>Invierno</option>
-                          </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Registrar</button>
-                      </form>
                     </div>
-                  </div>
-                  <!-- Productos en sistema -->
-                  <div class="col-md-3">
-                    <div class="border rounded p-3 mb-3" style="background:#f8f9fa;">
-                      <h6 class="mb-3">Productos en sistema</h6>
-                      <ul class="list-group">
-                        <li class="list-group-item py-1">Ramo de rosas</li>
-                        <li class="list-group-item py-1">Orquideas</li>
-                        <li class="list-group-item py-1">Girasol</li>
-                      </ul>
                     </div>
-                  </div>
-                  <!-- Categorizar por temporada -->
-                  <div class="col-md-4">
-                    <div class="border rounded p-3 mb-3" style="background:#f8f9fa;">
-                      <h6 class="mb-3">Categorizar por temporada</h6>
-                      <form id="formCategoria">
-                        <div class="mb-2">
-                          <label class="form-label mb-1">Seleccione productos:</label>
-                          <select class="form-select mb-2" multiple required>
-                            <option>Ramo de rosas</option>
-                            <option>Orquideas</option>
-                            <option>Girasol</option>
-                          </select>
+                    <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                        <h5 class="card-title">Total Pedidos</h5>
+                        <p id="totalPedidos" class="card-text">0</p>
                         </div>
-                        <div class="mb-2">
-                          <label class="form-label mb-1">Temporada:</label>
-                          <select class="form-select" required>
-                            <option value="">Choose...</option>
-                            <option>Primavera</option>
-                            <option>Verano</option>
-                            <option>Otoño</option>
-                            <option>Invierno</option>
-                          </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Cambiar</button>
-                      </form>
                     </div>
-                  </div>
+                    </div>
+                    <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                        <h5 class="card-title">Stock Bajo</h5>
+                        <p id="stockBajo" class="card-text">0</p>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-              </div>
+                </div>
             </div>
-          </div>
-          <div id="clientes" class="section-content d-none">
-            <div class="card card-user mb-4">
-              <div class="card-header">Clientes</div>
-              <div class="card-body">
-                <p>Gestión de clientes aquí.</p>
-              </div>
+
+            <!-- Usuarios -->
+            <div id="usuarios" class="section-content d-none">
+                <h2>Usuarios</h2>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrear">Crear Usuario</button>
+                <table class="table table-striped" id="usuariosTable">
+                <thead>
+                    <tr>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                </table>
             </div>
-          </div>
-          <div id="reportes" class="section-content d-none">
-            <div class="card card-user mb-4">
-              <div class="card-header">Reportes</div>
-              <div class="card-body">
+
+            <!-- Productos -->
+            <div id="productos" class="section-content d-none">
+                <h2>Productos</h2>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrearProducto">Crear Producto</button>
+                <table class="table table-striped" id="productosTable">
+                <thead>
+                    <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Pedidos -->
+            <div id="pedidos" class="section-content d-none">
+                <h2>Pedidos</h2>
+                <table class="table table-striped" id="pedidosTable">
+                <thead>
+                    <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Reportes -->
+            <div id="reportes" class="section-content d-none">
+                <h2>Reportes</h2>
                 <form id="formReporte">
-                  <div class="mb-3">
-                    <label class="form-label">Reportes de ventas</label>
-                  </div>
-                  <div class="row g-2 mb-3">
-                    <div class="col-md-4">
-                      <select class="form-select" required>
-                        <option value="">Ingrese el periodo a consultar</option>
-                        <option>01-02 al 28-02</option>
-                        <option>01-03 al 31-03</option>
-                      </select>
-                    </div>
-                    <div class="col-md-4">
-                      <select class="form-select">
-                        <option value="">Filtro por canal</option>
-                        <option>Ventas presenciales</option>
-                        <option>Ventas online</option>
-                      </select>
-                    </div>
-                    <div class="col-md-4">
-                      <select class="form-select">
-                        <option value="">Tipo de producto</option>
-                        <option>Ramo de rosas</option>
-                        <option>Orquideas</option>
-                        <option>Girasol</option>
-                      </select>
-                    </div>
-                  </div>
-                  <button type="button" class="btn btn-primary" id="btnConsultar">Consultar</button>
+                <select class="form-control mb-3">
+                    <option value="diario">Diario</option>
+                    <option value="mensual">Mensual</option>
+                    <option value="anual">Anual</option>
+                </select>
+                <button type="button" id="btnConsultar" class="btn btn-primary">Generar Reporte</button>
                 </form>
-                <!-- Resultado del reporte -->
-                <div id="reporteResultado" class="mt-4 d-none">
-                  <div class="card border-primary mb-3">
-                    <div class="card-header bg-primary text-white">Reporte</div>
-                    <div class="card-body">
-                      <h6 class="card-title">Ventas</h6>
-                      <!--implementar cuando haya backend-->>
-                      <p class="card-text">Aquí se mostrarán los resultados del reporte de ventas según los filtros seleccionados.</p>
-                      <div class="d-flex justify-content-end gap-2">
-                        <button class="btn btn-cancel" data-bs-toggle="modal" data-bs-target="#modalCancelarReporte">Cancel</button>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalExportar">imprimir</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <div id="reporteResultado" class="d-none"></div>
             </div>
-          </div>
-          <div id="usuarios" class="section-content d-none">
-            <div class="card card-user mb-4">
-              <div class="card-header">Usuarios</div>
-              <div class="card-body">
-                <p>Seleccione una acción para gestionar usuarios.</p>
-                <div class="user-actions mt-4">
-                  <button class="btn btn-action" data-bs-toggle="modal" data-bs-target="#modalCrear">Crear usuario</button>
-                  <button class="btn btn-action" data-bs-toggle="modal" data-bs-target="#modalEliminar">Eliminar usuario</button>
-                  <button class="btn btn-action" data-bs-toggle="modal" data-bs-target="#modalEditar">Editar usuario</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="configuracion" class="section-content d-none">
-            <div class="card card-user mb-4">
-              <div class="card-header">Configuración</div>
-              <div class="card-body">
-                <!--Poner cuando haya backend-->
-                <p>Poner opciones de configuracion</p>
-                <!--.................................-->
-              </div>
-            </div>
-          </div>
+
+            </main>
         </div>
-        <!-- Modals -->
-        <!-- Crear Usuario -->
-        <div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="modalCrearLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <form class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalCrearLabel">Crear usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-              </div>
-              <div class="modal-body">
-                <div class="row g-2 mb-3">
-                  <div class="col">
-                    <label class="form-label">Primer nombre:</label>
-                    <input type="text" class="form-control" required>
-                  </div>
-                  <div class="col">
-                    <label class="form-label">Primer apellido:</label>
-                    <input type="text" class="form-control" required>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Correo electrónico:</label>
-                  <input type="email" class="form-control" required>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-action">Crear</button>
-              </div>
-            </form>
-          </div>
         </div>
-        <!-- Eliminar Usuario -->
-        <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <form class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalEliminarLabel">Eliminar usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-              </div>
-              <div class="modal-body">
-                <label class="form-label">Ingrese el identificador del usuario a eliminar:</label>
-                <input type="text" class="form-control mb-3" placeholder="#E1na01n12o" required>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-action">Eliminar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <!-- Editar Usuario -->
-        <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <form class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="modalEditarLabel">Editar usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-              </div>
-              <div class="modal-body">
-                <label class="form-label">Ingrese el identificador del usuario a actualizar sus datos:</label>
-                <input type="text" class="form-control mb-3" placeholder="#E1na01n12o" required>
-                <div class="row g-2 mb-3">
-                  <div class="col">
-                    <label class="form-label">Primer nombre:</label>
-                    <input type="text" class="form-control" required>
-                  </div>
-                  <div class="col">
-                    <label class="form-label">Primer apellido:</label>
-                    <input type="text" class="form-control" required>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Correo electrónico:</label>
-                  <input type="email" class="form-control" required>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-action">Actualizar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <!-- Modal: Exportar ventas -->
-        <div class="modal fade" id="modalExportar" tabindex="-1" aria-labelledby="modalExportarLabel" aria-hidden="true">
-          <div class="modal-dialog">
+
+    <!-- Modal Crear Usuario -->
+    <div class="modal fade" id="modalCrear" tabindex="-1" role="dialog" aria-labelledby="modalCrearLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalExportarLabel">Exportar ventas</h5>
-              </div>
-              <div class="modal-body">
-                Exportar en pdf
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCrearLabel">Crear Usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="crearUsuarioForm">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="correo">Correo</label>
+                            <input type="email" class="form-control" id="correo" name="correo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rol">Rol</label>
+                            <select class="form-control" id="rol" name="rol">
+                                <option value="encargado">Encargado</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Crear Usuario</button>
+                    </form>
+                </div>
             </div>
-          </div>
         </div>
-        <!-- Modal: Cancelar reporte -->
-        <div class="modal fade" id="modalCancelarReporte" tabindex="-1" aria-labelledby="modalCancelarReporteLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="modalCancelarReporteLabel">Reporte</h5>
-              </div>
-              <div class="modal-body">
-                Consulta cancelada.
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Modal: Generar orden de despacho -->
-        <div class="modal fade" id="modalDespacho" tabindex="-1" aria-labelledby="modalDespachoLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <form class="modal-content">
-              <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalDespachoLabel">Generar orden de despacho para el pedido #4056</h5>
-              </div>
-              <div class="modal-body">
-                <div class="mb-2">
-                  <label class="form-label">Ramo de rosas</label>
-                  <input type="text" class="form-control" value="1 unidad" readonly>
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Dirección de envío</label>
-                  <input type="text" class="form-control" value="Av. miami 2345">
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Fecha estimada</label>
-                  <input type="text" class="form-control" value="30/03/2025 1 pm">
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Chofer</label>
-                  <select class="form-select">
-                    <option>chofer</option>
-                  </select>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalEstadoPreparacion">Crear e imprimir</button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <!-- Modal: Solicitudes de anulación -->
-        <div class="modal fade" id="modalSolicitudesAnulacion" tabindex="-1" aria-labelledby="modalSolicitudesAnulacionLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <form class="modal-content">
-              <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalSolicitudesAnulacionLabel">Solicitudes de anulación</h5>
-              </div>
-              <div class="modal-body">
-                <div class="mb-2">
-                  <label class="form-label">Ramo de rosas</label>
-                  <input type="text" class="form-control" value="1 unidad" readonly>
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Estado</label>
-                  <input type="text" class="form-control" value="Entregado" readonly>
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Dirección de envío</label>
-                  <input type="text" class="form-control" value="Av. miami 2345" readonly>
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Fecha estimada</label>
-                  <input type="text" class="form-control" value="30/03/2025 1 pm" readonly>
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Chofer</label>
-                  <select class="form-select" disabled>
-                    <option>chofer</option>
-                  </select>
-                </div>
-              </div>
-              <div class="modal-footer d-flex flex-row justify-content-between">
-                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Volver</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalEstadoNoAnulable">rechazar</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalEstadoNoAnulable">aprobar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <!-- Modal: Estado - Pedido en preparación -->
-        <div class="modal fade" id="modalEstadoPreparacion" tabindex="-1" aria-labelledby="modalEstadoPreparacionLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalEstadoPreparacionLabel">Estado</h5>
-              </div>
-              <div class="modal-body">
-                Pedido en preparación
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Modal: Estado - Pedido entregado -->
-        <div class="modal fade" id="modalEstadoEntregado" tabindex="-1" aria-labelledby="modalEstadoEntregadoLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalEstadoEntregadoLabel">Estado</h5>
-              </div>
-              <div class="modal-body">
-                Pedido entregado
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Modal: Estado - No se puede anular un pedido entregado -->
-        <div class="modal fade" id="modalEstadoNoAnulable" tabindex="-1" aria-labelledby="modalEstadoNoAnulableLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalEstadoNoAnulableLabel">Estado</h5>
-              </div>
-              <div class="modal-body">
-                No se puede anular un pedido entregado
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
     </div>
-  </div>
+
+    <!-- Modal Crear Producto -->
+    <div class="modal fade" id="modalCrearProducto" tabindex="-1" role="dialog" aria-labelledby="modalCrearProductoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalCrearProductoLabel">Crear Producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        
+        <div class="modal-body">
+            <form id="crearProductoForm">
+            
+            <div class="form-group">
+                <label for="nombreProducto">Nombre</label>
+                <input type="text" class="form-control" id="nombreProducto" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="precioProducto">Precio</label>
+                <input type="number" class="form-control" id="precioProducto" name="precio" min="0" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="stockProducto">Stock</label>
+                <input type="number" class="form-control" id="stockProducto" name="stock" min="0" value="0" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="categoriaProducto">Categoría</label>
+                <input type="text" class="form-control" id="categoriaProducto" name="categoria" value="General" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="imagenProducto">Imagen (URL)</label>
+                <input type="text" class="form-control" id="imagenProducto" name="imagen" placeholder="https://...">
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Crear Producto</button>
+            </form>
+        </div>
+        
+        </div>
+    </div>
+    </div>
+
+    <!-- Modal Editar Usuario -->
+    <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditarLabel">Editar Usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarUsuarioForm">
+                        <input type="hidden" id="editarUsuarioId">
+                        <div class="form-group">
+                            <label for="editarNombre">Nombre</label>
+                            <input type="text" class="form-control" id="editarNombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editarCorreo">Correo</label>
+                            <input type="email" class="form-control" id="editarCorreo" name="correo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editarRol">Rol</label>
+                            <select class="form-control" id="editarRol" name="rol">
+                                <option value="encargado">Encargado</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ver Pedido -->
+    <div class="modal fade" id="modalVerPedido" tabindex="-1" role="dialog" aria-labelledby="modalVerPedidoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalVerPedidoLabel">Detalles del Pedido</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Detalles del pedido -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Producto -->
+    <div class="modal fade" id="modalEditarProducto" tabindex="-1" role="dialog" aria-labelledby="modalEditarProductoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditarProductoLabel">Editar Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarProductoForm">
+                        <input type="hidden" id="editarProductoId">
+                        <div class="form-group">
+                            <label for="editarNombreProducto">Nombre</label>
+                            <input type="text" class="form-control" id="editarNombreProducto" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editarPrecioProducto">Precio</label>
+                            <input type="number" class="form-control" id="editarPrecioProducto" name="precio" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editarStockProducto">Stock</label>
+                            <input type="number" class="form-control" id="editarStockProducto" name="stock" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editarCategoriaProducto">Categoría</label>
+                            <input type="text" class="form-control" id="editarCategoriaProducto" name="categoria" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <script>
@@ -624,5 +440,15 @@
       }
     });
   </script>
+    <!-- Librería jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Plugin AutoTable para tablas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Tu script de administración -->
+    
+</body>
+</html>
 </body>
 </html>

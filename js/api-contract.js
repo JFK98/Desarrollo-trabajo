@@ -1,77 +1,111 @@
-window.API_CONTRACT = {
-  login: {
-    method: 'POST',
-    url: '/api/login',
-    body: { correo: 'string', password: 'string' },
-    response: { token: 'string', usuario: { nombre: 'string', rol: 'string' } }
-  },
+const API_BASE_URL = 'http://localhost:3000/api';
 
-  registrarCliente: {
-    method: 'POST',
-    url: '/api/clientes',
-    body: { correo: 'string', password: 'string', telefono: 'string' },
-    response: { mensaje: 'string' }
-  },
-
-  productos: {
-    list: { method: 'GET', url: '/api/productos' },
-    create: {
+const API_CONTRACT = {
+  auth: {
+    login: {
       method: 'POST',
-      url: '/api/productos',
-      body: { nombre: 'string', precio: 'number', cantidad: 'number', temporada: 'string' }
-    }
-  },
-
-  carrito: {
-  list: { method: 'GET', url: '/api/carrito' },
-  add: {
-    method: 'POST',
-    url: '/api/carrito',
-    body: {
-      productoId: 'number',
-      cantidad: 'number'
+      url: `${API_BASE_URL}/auth/login`
     },
-    response: {
-      mensaje: 'Producto agregado al carrito'
-    }
-  }
-},
-
-  pedidos: {
-    create: {
+    registro: {
       method: 'POST',
-      url: '/api/pedidos',
-      body: {
-        productos: [{ productoId: 'number', cantidad: 'number' }],
-        metodoEnvio: 'string'
-      }
+      url: `${API_BASE_URL}/auth/registro`
     },
-    getById: id => ({ method: 'GET', url: `/api/pedidos/${id}` }),
-    anular: id => ({
+    logout: {
       method: 'POST',
-      url: `/api/pedidos/${id}/anular`,
-      body: { motivo: 'string' }
-    })
+      url: `${API_BASE_URL}/auth/logout`
+    }
   },
 
   usuarios: {
-    create: {
+    crear: {
       method: 'POST',
-      url: '/api/usuarios',
-      body: { nombre: 'string', correo: 'string', rol: 'string', password: 'string' }
+      url: `${API_BASE_URL}/usuarios`
     },
-    update: id => ({
-      method: 'PUT',
-      url: `/api/usuarios/${id}`,
-      body: { nombre: 'string', correo: 'string', rol: 'string' }
+    listar: {
+      method: 'GET',
+      url: `${API_BASE_URL}/usuarios`
+    },
+    eliminar: (id) => ({
+      method: 'DELETE',
+      url: `${API_BASE_URL}/usuarios/${id}`
     }),
-    delete: id => ({ method: 'DELETE', url: `/api/usuarios/${id}` })
+    actualizar: (id) => ({
+      method: 'PUT',
+      url: `${API_BASE_URL}/usuarios/${id}`
+    })
+  },
+
+  productos: {
+    listar: {
+      method: 'GET',
+      url: `${API_BASE_URL}/productos`
+    },
+    obtener: (id) => ({
+      method: 'GET',
+      url: `${API_BASE_URL}/productos/${id}`
+    }),
+    crear: {
+      method: 'POST',
+      url: `${API_BASE_URL}/productos`
+    },
+    actualizar: (id) => ({
+      method: 'PUT',
+      url: `${API_BASE_URL}/productos/${id}`
+    }),
+    eliminar: (id) => ({
+      method: 'DELETE',
+      url: `${API_BASE_URL}/productos/${id}`
+    })
+  },
+
+  carrito: {
+    obtener: {
+      method: 'GET',
+      url: `${API_BASE_URL}/carrito`
+    },
+    agregar: {
+      method: 'POST',
+      url: `${API_BASE_URL}/carrito/agregar`
+    },
+    actualizar: {
+      method: 'PUT',
+      url: `${API_BASE_URL}/carrito/actualizar`
+    },
+    eliminar: {
+      method: 'DELETE',
+      url: `${API_BASE_URL}/carrito/eliminar`
+    }
+  },
+
+  pedidos: {
+    listar: {
+      method: 'GET',
+      url: `${API_BASE_URL}/pedidos`
+    },
+    crear: {
+      method: 'POST',
+      url: `${API_BASE_URL}/pedidos`
+    },
+    obtener: (id) => ({
+      method: 'GET',
+      url: `${API_BASE_URL}/pedidos/${id}`
+    }),
+    anular: (id) => ({
+      method: 'POST',
+      url: `${API_BASE_URL}/pedidos/${id}/anular`
+    })
   },
 
   reportes: {
-    get: periodo => ({
+    ventas: {
       method: 'GET',
-      url: `/api/reportes?periodo=${encodeURIComponent(periodo)}`
-    })
+      url: `${API_BASE_URL}/reportes/ventas`
+    },
+    inventario: {
+      method: 'GET',
+      url: `${API_BASE_URL}/reportes/inventario`
+    }
   }
 };
+
+window.API_CONTRACT = API_CONTRACT;

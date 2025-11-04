@@ -1,13 +1,35 @@
 const apiFetch = async (entry, { body, params } = {}) => {
-  const cfg = typeof entry === 'function' ? entry(params) : entry;
-  const opts = {
-    method: cfg.method,
-    headers: { 'Content-Type': 'application/json' }
-  };
-  if (body) opts.body = JSON.stringify(body);
-  const res = await fetch(cfg.url, opts);
-  const text = await res.text();
-  const data = text ? JSON.parse(text) : null;
-  if (!res.ok) throw { status: res.status, body: data };
-  return data;
+  try {
+    const token = localStorage.getItem('token');
+    const config = typeof entry === 'function' ? entry(params) : entry;
+
+    const headers = {
+      'Content-Type': 'application/json',
+      ...(token && { 'Authorization': `Bearer ${token}` })
+    };
+
+    const response = await fetch(config.url, {
+      method: config.method,
+      headers,
+      ...(body && { body: JSON.stringify(body) })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Error en la petición');
+    }
+
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return await response.json();
+    }
+
+    return null;
+
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
 };
+
+window.apiFetch = apiFetch;

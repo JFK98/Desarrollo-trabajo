@@ -125,15 +125,15 @@
       <form id="registroForm">
         <div class="form-group">
           <label for="usuario" class="form-label">Usuario:</label>
-          <input type="email" class="form-control" id="usuario" placeholder="example@gmail.com" required>
+          <input type="email" class="form-control" id="usuario" name="correo" placeholder="example@gmail.com" required>
         </div>
         <div class="form-group">
           <label for="password" class="form-label">Password:</label>
-          <input type="password" class="form-control" id="password" placeholder="ingrese una contraseña" required>
+          <input type="password" class="form-control" id="password" name="password" placeholder="ingrese una contraseña" required>
         </div>
         <div class="form-group">
           <label for="telefono" class="form-label">Numero de telefono:</label>
-          <input type="tel" class="form-control" id="telefono" placeholder="ingrese su numero telefonico" required>
+          <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="ingrese su numero telefonico" required>
         </div>
         <!--Aqui se llama a la API para insertar un usuario nuevo con los campos anteriores-->
         <button type="submit" class="btn btn-registro">Crear cuenta</button>
