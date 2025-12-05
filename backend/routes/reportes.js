@@ -3,6 +3,7 @@ const Pedido = require('../models/Pedido');
 const Producto = require('../models/Producto');
 const router = Router();
 
+<<<<<<< HEAD
 //Ventas totales y cantidad de pedidos
 router.get('/ventas', async (req, res) => {
   try {
@@ -40,6 +41,8 @@ router.get('/inventario', async (req, res) => {
 });
 
 //Ruta original para reportes por periodo
+=======
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.get('/', async (req, res) => {
   try {
     const { tipo } = req.query;

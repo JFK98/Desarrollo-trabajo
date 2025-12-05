@@ -2,8 +2,12 @@ const express = require('express');
 const Producto = require('../models/Producto');
 const router = express.Router();
 
+<<<<<<< HEAD
 
 //Listar productos ordenados por temporada y nombre
+=======
+//Listar productos
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.get('/', async (req, res) => {
   try {
     const productos = await Producto.find().sort({ temporada: 1, nombre: 1 });
@@ -21,7 +25,10 @@ router.get('/', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 //Crear producto
 router.post('/', async (req, res) => {
   try {
@@ -57,7 +64,10 @@ router.post('/', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 //Actualizar producto
 router.put('/:id', async (req, res) => {
   try {
@@ -86,7 +96,10 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 //Eliminar producto
 router.delete('/:id', async (req, res) => {
   try {
@@ -109,5 +122,9 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 
 module.exports = router;
+=======
+module.exports = router;
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca

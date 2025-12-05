@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 document.addEventListener('DOMContentLoaded', async () => {
   const usuarioId = localStorage.getItem("userId");
 
@@ -12,6 +13,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     } catch (err) {
       console.error("Error obteniendo dirección del usuario:", err);
+=======
+document.addEventListener('DOMContentLoaded', () => {
+    // Cargar carrito al iniciar
+    actualizarCarritoUI();
+    document.getElementById('carritoItems').addEventListener('click', (e) => {
+        const target = e.target;
+        
+        if (target.classList.contains('btn-decrease')) {
+            actualizarCantidad(target, -1);
+        } else if (target.classList.contains('btn-increase')) {
+            actualizarCantidad(target, 1);
+        } else if (target.classList.contains('btn-eliminar')) {
+            eliminarProducto(target);
+        }
+    });
+
+    const formPago = document.getElementById('formPago');
+    if (formPago) {
+        formPago.addEventListener('submit', handlePago);
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
     }
   }
 
@@ -322,7 +343,44 @@ async function handlePago(e) {
     const data = await res.json();
     if (!res.ok || !data.ok) throw new Error(data.msg || "Error al crear pedido");
 
+<<<<<<< HEAD
     localStorage.setItem("ultimoPedidoId", data.pedido._id);
+=======
+function actualizarCantidad(button, cambio) {
+    const item = button.closest('.carrito-item');
+    const id = item.dataset.id;
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    
+    const productoIndex = carrito.findIndex(p => p.id === id);
+    if (productoIndex !== -1) {
+        const nuevaCantidad = carrito[productoIndex].cantidad + cambio;
+        if (nuevaCantidad > 0) {
+            carrito[productoIndex].cantidad = nuevaCantidad;
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            actualizarCarritoUI();
+        }
+    }
+}
+
+function eliminarProducto(button) {
+    if (confirm('¿Está seguro de eliminar este producto?')) {
+        const item = button.closest('.carrito-item');
+        const id = item.dataset.id;
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        
+        carrito = carrito.filter(p => p.id !== id);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        actualizarCarritoUI();
+    }
+}
+
+async function handlePago(e) {
+    e.preventDefault();
+    
+    const direccion = document.getElementById('direccion').value;
+    const usuarioId = localStorage.getItem('userId'); 
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 
     // Vaciar carrito en DB y local
     try {
@@ -342,5 +400,10 @@ async function handlePago(e) {
 
 // Validar número de tarjeta (sin verificar otros campos como CVV o fecha o tipo de marca de la tarjeta ej Visa o el pais de esta)
 function validarTarjeta(numero) {
+<<<<<<< HEAD
   return String(numero).replace(/\s+/g,'').length === 16 && !isNaN(String(numero).replace(/\s+/g,''));
 }
+=======
+    return numero.length === 16 && !isNaN(numero);
+}
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca

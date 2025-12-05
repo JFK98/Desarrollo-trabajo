@@ -2,7 +2,11 @@ const express = require('express');
 const Usuario = require('../models/Usuario');
 const router = express.Router();
 
+<<<<<<< HEAD
 // Crear usuario
+=======
+//Crear usuario
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.post('/', async (req, res) => {
   try {
     console.log('BODY RECIBIDO:', req.body); // eliminar luego solo para depuración
@@ -21,10 +25,15 @@ router.post('/', async (req, res) => {
     const nuevoUsuario = new Usuario({
       nombre,
       correo,
+<<<<<<< HEAD
       password: password || '123456',
       rol: rol || 'encargado',
       telefono,
       direccion
+=======
+      password: password || '123456', 
+      rol: rol || 'encargado'
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
     });
 
     await nuevoUsuario.save();
@@ -36,7 +45,11 @@ router.post('/', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Obtener todos los usuarios
+=======
+//Listar todos los usuarios 
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.get('/', async (req, res) => {
   try {
     const usuarios = await Usuario.find().select('-password');
@@ -46,7 +59,11 @@ router.get('/', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Obtener usuario por ID
+=======
+//Obtener usuario por ID
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.get('/:id', async (req, res) => {
   try {
     const usuario = await Usuario.findById(req.params.id).select('-password');
@@ -59,7 +76,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Actualizar usuario
+=======
+//Actualizar usuario por ID
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.put('/:id', async (req, res) => {
   console.log('BODY RECIBIDO:', req.body);
   try {
@@ -94,7 +115,11 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Eliminar usuario
+=======
+//Eliminar usuario por ID
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.delete('/:id', async (req, res) => {
   try {
     const usuario = await Usuario.findByIdAndDelete(req.params.id);

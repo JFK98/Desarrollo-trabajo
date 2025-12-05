@@ -27,14 +27,23 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(data.msg || "Credenciales inválidas");
       }
 
+<<<<<<< HEAD
      
 
+=======
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
       localStorage.setItem("correo", data.usuario.correo);
       localStorage.setItem("rol", data.usuario.rol);
       localStorage.setItem("nombre", data.usuario.nombre);
       localStorage.setItem("userId", data.usuario.id); 
+<<<<<<< HEAD
       
       if (["admin", "encargado", "dueño"].includes(data.usuario.rol)) {
+=======
+
+      // Redirigir según rol
+      if (data.usuario.rol === "admin") {
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
         window.location.href = "administracion.html";
       } else {
         window.location.href = "inicio.html";

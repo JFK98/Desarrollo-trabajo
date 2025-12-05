@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 //Listener global para AGREGAR AL CARRITO
+=======
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.btn-success').forEach(button => {
+        button.addEventListener('click', addToCart);
+    });
+});
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 
 document.addEventListener('click', function(e) {
     const button = e.target.closest('.btn-agregar-carrito');
@@ -7,11 +15,29 @@ document.addEventListener('click', function(e) {
     addToCart({ target: button });
 });
 
+<<<<<<< HEAD
 //Función para agregar productos al carrito
 
 async function addToCart(event) {
   const button = event.target.closest('.btn-success');
   if (!button) return;
+=======
+    try {
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        
+        // Buscar producto por ID
+        const existingProductIndex = carrito.findIndex(item => item.id === productData.id);
+        
+        if (existingProductIndex >= 0) {
+            carrito[existingProductIndex].cantidad += 1;
+        } else {
+            carrito.push({...productData});
+        }
+
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        console.log('Carrito actualizado:', carrito); 
+        alert('Producto agregado al carrito exitosamente');
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 
   const productData = {
     productoId: button.dataset.id,   
@@ -27,6 +53,7 @@ async function addToCart(event) {
       alert("Debes iniciar sesión para agregar productos al carrito");
       return;
     }
+<<<<<<< HEAD
 
     //Guardar en backend (carrito)
     await fetch("http://localhost:3000/api/carrito/agregar", {
@@ -165,3 +192,6 @@ function crearCardProducto(p) {
 //Ejecutar carga al iniciar la página
 
 document.addEventListener('DOMContentLoaded', cargarProductosPorTemporada);
+=======
+}
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca

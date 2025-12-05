@@ -2,7 +2,11 @@ const express = require('express');
 const Usuario = require('../models/Usuario'); 
 const router = express.Router();
 
+<<<<<<< HEAD
 // Ruta para login
+=======
+
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.post('/login', async (req, res) => {
   try {
     const { correo, password } = req.body;
@@ -14,10 +18,13 @@ router.post('/login', async (req, res) => {
     }
 
     
+<<<<<<< HEAD
     if (usuario.password !== password) {
       return res.status(401).json({ ok: false, msg: 'Credenciales inválidas' });
     }
 
+=======
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
     res.json({
       ok: true,
       usuario: {
@@ -35,7 +42,11 @@ router.post('/login', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Ruta para registro
+=======
+
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.post('/registro', async (req, res) => {
   try {
     const { nombre, correo, password, rol, telefono } = req.body;
@@ -68,7 +79,11 @@ router.post('/registro', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Ruta para logout
+=======
+
+>>>>>>> da512b33258ccefbb4c80cf47f4cb85c823a05ca
 router.post('/logout', (req, res) => {
   res.json({ ok: true, msg: 'Sesión cerrada correctamente' });
 });
