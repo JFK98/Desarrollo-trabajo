@@ -1,3 +1,4 @@
+// Manejar el formulario de login
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
 
@@ -26,17 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(data.msg || "Credenciales inválidas");
       }
 
-      // Guardar datos en localStorage
-      // ⚠️ Tu backend no devuelve token todavía, así que esta línea no sirve:
-      // localStorage.setItem("token", data.token);
+     
 
       localStorage.setItem("correo", data.usuario.correo);
       localStorage.setItem("rol", data.usuario.rol);
       localStorage.setItem("nombre", data.usuario.nombre);
-      localStorage.setItem("userId", data.usuario.id); // 👈 corregido
-
-      // Redirigir según rol
-      if (data.usuario.rol === "admin") {
+      localStorage.setItem("userId", data.usuario.id); 
+      
+      if (["admin", "encargado", "dueño"].includes(data.usuario.rol)) {
         window.location.href = "administracion.html";
       } else {
         window.location.href = "inicio.html";

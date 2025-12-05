@@ -4,7 +4,6 @@
   <title>Inicio</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap 3 CDN -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -65,7 +64,6 @@
       color: #222;
       text-align: center;
     }
-    /* Popover personalizado para el menú de cuenta */
     .popover-account {
       position: absolute;
       z-index: 1050;
@@ -78,9 +76,6 @@
       display: none;
     }
     .popover-account{
-      /*width: 100%;
-      margin-bottom: 10px;
-      */
       width: 2vw;
       margin-top: auto;
       margin-left: auto;
@@ -134,11 +129,7 @@
               <span class="glyphicon glyphicon-user"></span> <span id="cuentaActiva">Tu Cuenta</span>
             </a>
             <div id="popoverAccount" class="popover-account text-center">
-              <!-- Este contenido será reemplazado por el script -->
             </div>
-
-
-            <!-- Popover personalizado -->
           </li>
           <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito</a></li>
         </ul>
@@ -146,140 +137,33 @@
     </div>
   </nav>
 
-  <h1 class="text-center">Productos</h1>
-  <!--Productos de ejemplo-->
-  <div class="container">    
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">ID 3046</div>
-          <div class="panel-body"><img src="imagenes/rosa.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Ramo de rosas de 20 rosas<br>50.000</div>
-          <button class="btn btn-success btn-block" data-id="3046"
-          data-nombre="Ramo de rosas"
-          data-precio="50000"
-          data-imagen="imagenes/rosa.jpg">Agregar al carrito</button>
-        </div>
-      </div>
-      <div class="col-sm-4"> 
-        <div class="panel panel-danger">
-          <div class="panel-heading">ID 3045</div>
-          <div class="panel-body"><img src="imagenes/rosa blanca.png" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Ramo de rosas blancas de 20 rosas<br>55.000</div>
-          <button class="btn btn-success btn-block" data-id="3045"
-          data-nombre="Ramo de rosas blancas"
-          data-precio="55000"
-          data-imagen="imagenes/rosa.jpg">Agregar al carrito</button>
-        </div>
-      </div>
-      <div class="col-sm-4"> 
-        <div class="panel panel-success">
-          <div class="panel-heading">ID 2070</div>
-          <div class="panel-body"><img src="imagenes/arreglo_funebre.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Arreglo floral funebre de rosas blancas<br>80.000</div>
-          <button class="btn btn-success btn-block" data-id="2070"
-          data-nombre="Arreglo funebre rosas blancas"
-          data-precio="80000"
-          data-imagen="imagenes/rosa.jpg">Agregar al carrito</button>
-        </div>
-      </div>
-    </div>
-  </div><br>
+  <h1 class="text-center">Catalogo</h1>
+  <br>
+  <section id="productos-primavera" class="my-5">
+    <h2 class="text-center">🌸 Primavera</h2>
+    <div class="row" id="listaPrimavera"></div>
+  </section>
 
-  <div class="container">    
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">Producto 4</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
-        </div>
-      </div>
-      <div class="col-sm-4"> 
-        <div class="panel panel-danger">
-          <div class="panel-heading">Producto 5</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
-        </div>
-      </div>
-      <div class="col-sm-4"> 
-        <div class="panel panel-success">
-          <div class="panel-heading">Producto 6</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
-        </div>
-      </div>
-    </div>
-  </div><br> 
+  <section id="productos-verano" class="my-5">
+      <h2 class="text-center">☀️ Verano</h2>
+      <div class="row" id="listaVerano"></div>
+  </section>
 
-  <div class="container">    
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">Producto 7</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
-        </div>
-      </div>
-      <div class="col-sm-4"> 
-        <div class="panel panel-danger">
-          <div class="panel-heading">Producto 8</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
-        </div>
-      </div>
-      <div class="col-sm-4"> 
-        <div class="panel panel-success">
-          <div class="panel-heading">Producto 9</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
-        </div>
-      </div>
-    </div>
-  </div><br>
+  <section id="productos-otoño" class="my-5">
+      <h2 class="text-center">🍂 Otoño</h2>
+      <div class="row" id="listaOtono"></div>
+  </section>
 
-  <div class="container">    
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">Producto 10</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
-        </div>
-      </div>
-      <div class="col-sm-4"> 
-        <div class="panel panel-primary">
-          <div class="panel-heading">Producto 11</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
-        </div>
-      </div>
-      <div class="col-sm-4"> 
-        <div class="panel panel-primary">
-          <div class="panel-heading">Producto 12</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Descripción del producto y precio</div>
-          <button class="btn btn-success btn-block">Agregar al carrito</button>
-        </div>
-      </div>
-    </div>
-  </div><br><br>
+  <section id="productos-invierno" class="my-5">
+      <h2 class="text-center">❄️ Invierno</h2>
+      <div class="row" id="listaInvierno"></div>
+  </section>
 </div>
 
 <footer class="container-fluid text-center">
   <p>@Flor & Vida 2025 Copyright</p>  
   <p>Dirección <br>Comuna de Maipu <br>Av. no se llama 456</p>
 </footer>
-
-<!-- Modal Quienes Somos -->
 <div id="modalAbout" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -297,22 +181,22 @@
   </div>
 </div>
 <script>
+  // Manejar el botón de Tu cuenta
 $(function() {
   const $popover = $('#popoverAccount');
   const $btn = $('#accountBtn');
   const correo = localStorage.getItem('correo');
 
-  // Mostrar correo en el navbar
   if (correo) {
     $('#cuentaActiva').text(correo);
   }
 
-  // Reemplazar contenido del popover si esta logueado
   if (correo) {
     $popover.html(`
       <p>Sesión iniciada como:</p>
       <strong>${correo}</strong><br><br>
       <a href="pedidos.html" class="btn btn-info btn-lg">Ver mis pedidos</a><br><br>
+      <a href="preferencias.html" class="btn btn-warning btn-lg">Preferencias</a><br><br>
       <button id="cerrarSesion" class="btn btn-danger btn-lg">Cerrar sesión</button>
     `);
   } else {
@@ -346,7 +230,6 @@ $(function() {
     $popover.hide();
   });
 
-  // Cerrar sesión
   $(document).on('click', '#cerrarSesion', function() {
     localStorage.clear();
     window.location.href = 'inicio.html';

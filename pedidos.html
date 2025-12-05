@@ -147,7 +147,6 @@
       <p>Flores, Arreglos y Decoraciones</p>
     </div>
   </div>
-  <!-- Navbar Bootstrap 3 -->
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -168,7 +167,6 @@
             <a href="#" id="accountBtn">
               <span class="glyphicon glyphicon-user"></span> <span id="cuentaActiva">Tu Cuenta</span>
             </a>
-            <!-- Popover personalizado -->
             <div id="popoverAccount" class="popover-account text-center">
             </div>
           </li>
@@ -177,14 +175,11 @@
       </div>
     </div>
   </nav>
-  <!-- Contenido principal -->
   <div class="container">
     <div class="pedido-panel" id="pedidoDetalle">
       <p>Cargando pedido...</p>
     </div>
   </div>
-
-  <!-- Modal Quienes Somos -->
 <div id="modalAbout" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -201,7 +196,6 @@
     </div>
   </div>
 </div>
-  <!-- Modal: Anular pedido -->
   <div class="modal fade" id="modalAnular" tabindex="-1" role="dialog" aria-labelledby="modalAnularLabel">
     <div class="modal-dialog" role="document">
       <form class="modal-content" id="formAnular">
@@ -226,7 +220,6 @@
       </form>
     </div>
   </div>
-  <!-- Modal: Anulación registrada -->
   <div class="modal fade" id="modalAnulacion" tabindex="-1" role="dialog" aria-labelledby="modalAnulacionLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -243,7 +236,7 @@
       </div>
     </div>
   </div>
-  <!-- Modal: Boleta enviada -->
+  <!--MODAL SIN IMPLEMENTAR YA QUE LA BOLETA SE ENVIA POR CORREO Y SE ADMINISTRA DESDE ADMINISTRACION
   <div class="modal fade" id="modalBoleta" tabindex="-1" role="dialog" aria-labelledby="modalBoletaLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -260,20 +253,17 @@
       </div>
     </div>
   </div>
-</div>
-
+</div>-->
+<!---->
 <footer class="container-fluid text-center">
   <p>@Flor & Vida 2025 Copyright</p>  
   <p>Dirección <br>Comuna de Maipu <br>Av. no se llama 456</p>
 </footer>
 
 <script>
-  // Mostrar campo "Otro" si se selecciona "Otro" como motivo
   document.getElementById('motivo').addEventListener('change', function() {
     document.getElementById('motivoOtro').style.display = this.value === 'Otro' ? 'block' : 'none';
   });
-
-  // Simulación de anulación de pedido
   document.getElementById('formAnular').addEventListener('submit', function(e) {
     e.preventDefault();
     $('#modalAnular').modal('hide');
@@ -320,24 +310,25 @@
   });
 </script>
 <script>
+  // Manejar el botón de Tu cuenta
 $(function() {
   const $popover = $('#popoverAccount');
   const $btn = $('#accountBtn');
   const correo = localStorage.getItem('correo');
 
-  // Mostrar correo en el navbar
   if (correo) {
     $('#cuentaActiva').text(correo);
   }
 
-  // Reemplazar contenido del popover si esta logueado
   if (correo) {
-    $popover.html(`
-      <p>Sesión iniciada como:</p>
-      <strong>${correo}</strong><br><br>
-      <a href="pedidos.html" class="btn btn-info btn-lg">Ver mis pedidos</a><br><br>
-      <button id="cerrarSesion" class="btn btn-danger btn-lg">Cerrar sesión</button>
-    `);
+  $('#cuentaActiva').text(correo);
+  $popover.html(`
+    <p>Sesión iniciada como:</p>
+    <strong>${correo}</strong><br><br>
+    <a href="pedidos.html" class="btn btn-info btn-lg">Ver mis pedidos</a><br><br>
+    <a href="preferencias.html" class="btn btn-warning btn-lg">Preferencias</a><br><br>
+    <button id="cerrarSesion" class="btn btn-danger btn-lg">Cerrar sesión</button>
+  `);
   } else {
     $popover.html(`
       <a href="login.html" class="btn btn-primary btn-lg">Iniciar sesión</a><br>
@@ -369,7 +360,6 @@ $(function() {
     $popover.hide();
   });
 
-  // Cerrar sesión
   $(document).on('click', '#cerrarSesion', function() {
     sessionStorage.setItem('desdeLogout', 'true');
     localStorage.clear();
@@ -378,6 +368,7 @@ $(function() {
 });
 </script>
 <script>
+  // Manejar el token y rol del usuario
 document.addEventListener("DOMContentLoaded", async () => {
   const usuarioId = localStorage.getItem("userId");
   if (!usuarioId) {
@@ -390,29 +381,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await res.json();
 
     if (data.ok) {
-      // Filtrar pedidos que no estén anulados
       const pedidosActivos = data.pedidos.filter(p => p.estado !== "anulado");
 
       if (pedidosActivos.length > 0) {
-        const pedido = pedidosActivos[pedidosActivos.length - 1]; // último activo
+        let html = "";
 
-        document.getElementById("pedidoDetalle").innerHTML = `
-          <h3>Detalle del Pedido #${pedido._id}</h3>
-          <span class="badge badge-custom">Estado: ${pedido.estado}</span><br>
-          <span class="badge badge-custom">Productos: ${pedido.items.map(p => p.nombre + " x" + p.cantidad).join(", ")}</span>
-          <div class="form-group"><label>Total:</label>
-            <input type="text" class="form-control" value="$${pedido.total}" readonly>
-          </div>
-          <div class="form-group"><label>Dirección:</label>
-            <input type="text" class="form-control" value="${pedido.direccion}" readonly>
-          </div>
-          <div class="form-group"><label>Fecha:</label>
-            <input type="text" class="form-control" value="${new Date(pedido.createdAt).toLocaleString()}" readonly>
-          </div>
-          <button type="button" class="btn btn-anular" data-toggle="modal" data-target="#modalAnular">
-            Anular pedido
-          </button>
-        `;
+        pedidosActivos.forEach(pedido => {
+          //Guardar el ID del último pedido en localStorage
+          localStorage.setItem("ultimoPedidoId", pedido._id);
+
+          html += `
+            <div class="pedido-panel mb-4">
+              <h3>Detalle del Pedido #${pedido._id}</h3>
+              <span class="badge badge-custom">Estado: ${pedido.estado}</span><br>
+              <span class="badge badge-custom">Productos: ${pedido.items.map(p => p.nombre + " x" + p.cantidad).join(", ")}</span>
+              <div class="form-group"><label>Total:</label>
+                <input type="text" class="form-control" value="$${pedido.total}" readonly>
+              </div>
+              <div class="form-group"><label>Dirección:</label>
+                <input type="text" class="form-control" value="${pedido.direccion}" readonly>
+              </div>
+              <div class="form-group"><label>Fecha:</label>
+                <input type="text" class="form-control" value="${new Date(pedido.createdAt).toLocaleString()}" readonly>
+              </div>
+              <button type="button" class="btn btn-anular" data-toggle="modal" data-target="#modalAnular" data-id="${pedido._id}">
+                Anular pedido
+              </button>
+            </div>
+          `;
+        });
+
+        document.getElementById("pedidoDetalle").innerHTML = html;
       } else {
         document.getElementById("pedidoDetalle").innerHTML = "<p>No tienes pedidos activos.</p>";
       }
@@ -426,13 +425,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 </script>
 <script>
+  // Anular pedido desde formulario anular
 document.addEventListener("DOMContentLoaded", () => {
   const formAnular = document.getElementById("formAnular");
 
   formAnular.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const pedidoId = localStorage.getItem("ultimoPedidoId"); // guardado al comprar
+    const pedidoId = localStorage.getItem("ultimoPedidoId"); 
     const motivo = document.getElementById("motivo").value === "Otro"
       ? document.getElementById("motivoOtro").value
       : document.getElementById("motivo").value;
@@ -457,7 +457,6 @@ document.addEventListener("DOMContentLoaded", () => {
           $('#modalAnulacion').modal('show');
         }, 400);
 
-        // Actualizar estado en pantalla
         document.querySelector(".badge-custom").textContent = "Estado: anulado";
       } else {
         alert("Error al anular pedido: " + (data.msg || "desconocido"));

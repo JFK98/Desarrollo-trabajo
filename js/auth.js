@@ -1,3 +1,4 @@
+//Manejo de autenticación y sesión
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
   

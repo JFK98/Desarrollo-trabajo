@@ -1,5 +1,5 @@
 const { Schema, model, Types } = require('mongoose');
-
+// Esquema para el carrito
 const CarritoSchema = new Schema({
   usuarioId: { type: Types.ObjectId, ref: 'Usuario', unique: true, required: true },
   items: [

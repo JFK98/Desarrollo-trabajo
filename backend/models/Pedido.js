@@ -1,24 +1,21 @@
+// ...existing code...
 const { Schema, model, Types } = require('mongoose');
 
-/**
- * Esquema de Pedido
- * Representa una orden de compra realizada por un usuario
- */
+// Esquema para el pedido
 const PedidoSchema = new Schema({
-  // Usuario que realizó el pedido
+ 
   usuarioId: { 
     type: Types.ObjectId, 
     ref: 'Usuario', 
     required: true 
   },
-
-  // Lista de productos incluidos en el pedido
+  // Productos en el pedido
   items: [
     {
-      productoId: { type: Types.ObjectId, ref: 'Producto' }, // referencia al producto
-      nombre: { type: String, required: true },              // nombre del producto
-      cantidad: { type: Number, required: true },            // cantidad comprada
-      precio: { type: Number, required: true }               // precio unitario
+      productoId: { type: Types.ObjectId, ref: 'Producto' }, 
+      nombre: { type: String, required: true },              
+      cantidad: { type: Number, required: true },            
+      precio: { type: Number, required: true }               
     }
   ],
 
@@ -41,14 +38,29 @@ const PedidoSchema = new Schema({
     required: true 
   },
 
-  // Motivo de anulación (si aplica)
+  // Motivo de anulación
   motivoAnulacion: { 
     type: String 
+  },
+
+  // Nuevo: tipo de entrega (presencial o domicilio)
+  entregaTipo: {
+    type: String,
+    enum: ['presencial', 'domicilio'],
+    default: 'presencial'
+  },
+
+  // Nuevo: costo de envío en pesos (si aplica)
+  shippingCost: {
+    type: Number,
+    default: 0,
+    min: 0
   }
 
 }, { 
-  timestamps: true // agrega createdAt y updatedAt automáticamente
+  timestamps: true 
 });
 
-// Exportar el modelo
+
 module.exports = model('Pedido', PedidoSchema);
+// ...existing code...

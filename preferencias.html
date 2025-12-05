@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Preferencias - Flor y Vida</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    .jumbotron {
+      margin-bottom: 0;
+      background-color: #b65d5d;
+      padding-top: 1vw;
+      padding-bottom: 1vw;
+    }
+    #logo {
+      width: 15vw;
+      height: 8vw;
+    }
+    .preferencias-panel {
+      border: 2px solid #b5b5b5;
+      border-radius: 8px;
+      background: #fafafa;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      margin: 2rem auto;
+      max-width: 600px;
+      padding: 30px 30px 20px 30px;
+    }
+    .preferencias-panel h3 {
+      margin-top: 0;
+      margin-bottom: 25px;
+      color: #b65d5d;
+      font-weight: bold;
+      text-align: center;
+    }
+    .form-label {
+      font-weight: 500;
+      color: #333;
+    }
+    .btn-guardar {
+      background: #03a9f4;
+      color: #fff;
+      font-weight: 600;
+      width: 100%;
+      font-size: 1.1rem;
+      margin-top: 2rem;
+      border: none;
+    }
+    .btn-guardar:hover {
+      background: #0288d1;
+      color: #fff;
+    }
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+      width: 100%;
+      flex-shrink: 0;
+      color: #222;
+      text-align: center;
+    }
+    .navbar-brand img {
+      object-fit: contain;
+      width: 60px;
+      height: 60px;
+      margin-top: -20px;
+    }
+    .popover-account {
+      position: absolute;
+      z-index: 1050;
+      min-width: 220px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+      padding: 20px 15px 15px 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="main-content">
+  <div class="jumbotron">
+    <div class="container text-center">
+      <h1><img id="logo" alt="logo" src="imagenes/Flor y Vida logo.jpg"></h1>      
+      <p>Flores, Arreglos y Decoraciones</p>
+    </div>
+  </div>
+
+  <!--Navbar -->
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="#"><img alt="logo icon" src="imagenes/Logo icono.png"></a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="inicio.html">Inicio</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#modalAbout">¿Quienes somos?</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li style="position:relative;">
+            <a href="#" id="accountBtn">
+              <span class="glyphicon glyphicon-user"></span> <span id="cuentaActiva">Tu Cuenta</span>
+            </a>
+            <div id="popoverAccount" class="popover-account text-center"></div>
+          </li>
+          <li><a href="carrito.html"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--Panel de preferencias -->
+  <div class="container">
+    <div class="preferencias-panel">
+      <h3>Preferencias de Usuario</h3>
+      <form id="formPreferencias">
+        <div class="form-group">
+          <label class="form-label" for="nombre">Nombre</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="telefono">Teléfono</label>
+          <input type="tel" class="form-control" id="telefono" name="telefono" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="direccion">Dirección</label>
+          <input type="text" class="form-control" id="direccion" name="direccion" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="correo">Correo</label>
+          <input type="email" class="form-control" id="correo" name="correo" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Contraseña nueva</label>
+          <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-guardar">Guardar cambios</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>@Flor & Vida 2025 Copyright</p>  
+  <p>Dirección <br>Comuna de Maipú <br>Av. no se llama 456</p>
+</footer>
+
+<!--Modal ¿Quienes somos? -->
+<div id="modalAbout" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#b65d5d; color:white;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">¿Quienes somos?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Somos Flor & Vida, una empresa dedicada a la creación de arreglos florales, decoraciones personalizadas y momentos inolvidables. Nuestro compromiso es ofrecer productos de calidad con un toque artístico y emocional.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>@Flor & Vida 2025 Copyright</p>  
+  <p>Dirección <br>Comuna de Maipú <br>Av. no se llama 456</p>
+</footer>
+<script>
+  // Manejar el botón de Tu cuenta
+$(function() {
+  const $popover = $('#popoverAccount');
+  const $btn = $('#accountBtn');
+  const correo = localStorage.getItem('correo');
+
+  if (correo) {
+    $('#cuentaActiva').text(correo);
+  }
+
+  if (correo) {
+    $popover.html(`
+      <p>Sesión iniciada como:</p>
+      <strong>${correo}</strong><br><br>
+      <a href="pedidos.html" class="btn btn-info btn-lg">Ver mis pedidos</a><br><br>
+      <a href="preferencias.html" class="btn btn-warning btn-lg">Preferencias</a><br><br>
+      <button id="cerrarSesion" class="btn btn-danger btn-lg">Cerrar sesión</button>
+    `);
+  } else {
+    $popover.html(`
+      <a href="login.html" class="btn btn-primary btn-lg">Iniciar sesión</a><br>
+      <p>¿No tienes una cuenta?</p>
+      <a href="registro.html" class="btn btn-success btn-lg">Crear cuenta</a>
+    `);
+  }
+
+ 
+  $btn.on('click', function(e) {
+    e.preventDefault();
+    $('.popover-account').not($popover).hide();
+    $popover.css({
+      top: $btn.parent().height(),
+      left: $btn.position().left - ($popover.outerWidth()/2) + ($btn.outerWidth()/2),
+      display: 'block'
+    });
+    return false;
+  });
+
+ 
+  $(document).on('mousedown', function(e) {
+    if (!$(e.target).closest('#popoverAccount, #accountBtn').length) {
+      $popover.hide();
+    }
+  });
+
+  $(window).on('scroll resize', function() {
+    $popover.hide();
+  });
+
+  $(document).on('click', '#cerrarSesion', function() {
+    localStorage.clear();
+    window.location.href = 'inicio.html';
+  });
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('token');
+  const rol = localStorage.getItem('rol');
+
+});
+
+// Manejar preferencias del usuario (nombre, teléfono, dirección, correo, contraseña (si se desea cambiar))
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const form = document.getElementById("formPreferencias");
+  const usuarioId = localStorage.getItem("userId"); 
+
+  if (!usuarioId) {
+    alert("No has iniciado sesión");
+    return;
+  }
+
+  try {
+    // Obtener datos del backend
+    const res = await fetch(`http://localhost:3000/api/usuarios/${usuarioId}`);
+    const data = await res.json();
+
+    if (res.ok && data.ok) {
+      const usuario = data.usuario;
+      document.getElementById("nombre").value = usuario.nombre || "";
+      document.getElementById("telefono").value = usuario.telefono || "";
+      document.getElementById("direccion").value = usuario.direccion || "";
+      document.getElementById("correo").value = usuario.correo || "";
+    } else {
+      alert("Error al cargar datos del usuario");
+    }
+  } catch (err) {
+    console.error("Error cargando usuario:", err);
+    alert("No se pudo cargar la información del usuario");
+  }
+
+  // Guardar cambios
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      nombre: document.getElementById("nombre").value,
+      telefono: document.getElementById("telefono").value,
+      direccion: document.getElementById("direccion").value,
+      correo: document.getElementById("correo").value,
+      password: document.getElementById("password").value
+    };
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/usuarios/${usuarioId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        alert("Preferencias actualizadas correctamente");
+        document.getElementById("password").value = "";
+      } else {
+        alert("Error al actualizar: " + (data.msg || "desconocido"));
+      }
+    } catch (err) {
+      console.error("Error actualizando usuario:", err);
+      alert("No se pudo actualizar la información");
+    }
+  });
+});
+</script>
+</body>
+</html>

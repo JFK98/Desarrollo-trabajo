@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-
+// Esquema para el producto (flores o arreglos florales)
 const ProductoSchema = new Schema({
   nombre: {
     type: String,
@@ -16,18 +16,20 @@ const ProductoSchema = new Schema({
     default: 0,
     min: [0, 'El stock no puede ser negativo']
   },
-  categoria: {
-    type: String,
-    default: 'General',
-    trim: true
-  },
   imagen: {
     type: String,
-    default: '' // aquí puedes guardar la URL o ruta de la imagen
+    default: ''
+  },
+
+  temporada: {
+    type: String,
+    required: [true, 'La temporada es obligatoria'],
+    enum: ['primavera', 'verano', 'otoño', 'invierno'],
+    trim: true
   }
-}, { 
-  timestamps: true // agrega createdAt y updatedAt automáticamente
+
+}, {
+  timestamps: true
 });
 
-// Exportar el modelo
 module.exports = model('Producto', ProductoSchema);

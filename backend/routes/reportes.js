@@ -1,16 +1,49 @@
 const { Router } = require('express');
 const Pedido = require('../models/Pedido');
+const Producto = require('../models/Producto');
 const router = Router();
 
-/**
- * Generar reporte de ventas
- * GET /api/reportes?tipo=diario|mensual|anual
- */
+//Ventas totales y cantidad de pedidos
+router.get('/ventas', async (req, res) => {
+  try {
+    const pedidos = await Pedido.find();
+
+    const total = pedidos.reduce((acc, p) => acc + p.total, 0);
+    const cantidad = pedidos.length;
+
+    res.json({
+      ok: true,
+      total,
+      pedidos: cantidad
+    });
+
+  } catch (err) {
+    res.status(500).json({ ok: false, msg: err.message });
+  }
+});
+
+//Ruta para inventario general
+router.get('/inventario', async (req, res) => {
+  try {
+    const productos = await Producto.find();
+
+    const stockBajo = productos.filter(p => p.stock <= 5).length;
+
+    res.json({
+      ok: true,
+      stockBajo
+    });
+
+  } catch (err) {
+    res.status(500).json({ ok: false, msg: err.message });
+  }
+});
+
+//Ruta original para reportes por periodo
 router.get('/', async (req, res) => {
   try {
     const { tipo } = req.query;
 
-    // Agrupación según tipo
     let groupFormat;
     if (tipo === 'diario') groupFormat = { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } };
     else if (tipo === 'mensual') groupFormat = { $dateToString: { format: "%Y-%m", date: "$createdAt" } };
@@ -29,6 +62,7 @@ router.get('/', async (req, res) => {
     ]);
 
     res.json({ ok: true, reporte });
+
   } catch (err) {
     res.status(500).json({ ok: false, msg: err.message });
   }

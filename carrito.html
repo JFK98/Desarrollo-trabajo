@@ -131,7 +131,6 @@
               <span class="glyphicon glyphicon-user"></span> <span id="cuentaActiva">Tu Cuenta</span>
             </a>
             <div id="popoverAccount" class="popover-account text-center">
-              <!-- Este contenido será reemplazado por el script -->
             </div>
           </li>
           <li class="active"><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Carrito</a></li>
@@ -144,7 +143,6 @@
     <div class="carrito-panel">
       <h3>Tu Carrito de Compras</h3>
       <div id="carritoItems">
-        <!-- Los productos se agregarán dinámicamente aquí -->
       </div>
       
       <hr>
@@ -155,10 +153,8 @@
       <button type="button" class="btn btn-pagar" data-toggle="modal" data-target="#modalPago">Ir a pagar</button>
     </div>
   </div>
-
-  <!-- Template para productos -->
   <template id="itemTemplate">
-    <div class="carrito-item">
+    <div class="carrito-item" data-id="__PRODUCTO_ID__">
       <div class="row">
         <div class="col-sm-6">
           <h4 class="producto-nombre"></h4>
@@ -171,13 +167,13 @@
               <span class="input-group-btn">
                 <button class="btn btn-default btn-decrease" type="button">-</button>
               </span>
-              <input type="number" class="form-control cantidad-producto" value="1" min="1">
+              <input type="number" class="form-control cantidad-producto" value="1" min="1" readonly>
               <span class="input-group-btn">
                 <button class="btn btn-default btn-increase" type="button">+</button>
               </span>
             </div>
             <p class="item-total"></p>
-            <button class="btn btn-danger btn-sm pull-right">
+            <button class="btn btn-danger btn-sm btn-eliminar">
               <span class="glyphicon glyphicon-trash"></span> Eliminar
             </button>
           </div>
@@ -185,10 +181,7 @@
       </div>
     </div>
   </template>
-
-  <!-- Modal de pago -->
-  <!-- ... (mantener los modales existentes) ... -->
-   <div class="modal fade" id="modalPago" tabindex="-1" role="dialog">
+  <div class="modal fade" id="modalPago" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -197,6 +190,22 @@
       </div>
       <form id="formPago">
         <div class="modal-body">
+          <div class="form-group">
+            <label>Tipo de entrega</label>
+            <div class="radio">
+              <label>
+                <input type="radio" name="entregaTipo" value="presencial" id="entregaPresencial" checked>
+                Retiro / Entrega presencial
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="entregaTipo" value="domicilio" id="entregaDomicilio">
+                Envío a domicilio (se usará la dirección registrada)
+              </label>
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="tarjeta">Número de Tarjeta</label>
             <input type="text" class="form-control" id="tarjeta" required 
@@ -212,9 +221,19 @@
             <input type="text" class="form-control" id="cvv" required 
                    pattern="[0-9]{3,4}" placeholder="123">
           </div>
+
           <div class="form-group">
             <label for="direccion">Dirección de Envío</label>
-            <textarea class="form-control" id="direccion" required></textarea>
+            <textarea class="form-control" id="direccion"></textarea>
+            <small id="direccionHelp" class="text-muted">
+              Si seleccionas "Envío a domicilio" se usará la dirección registrada y no podrá modificarse aquí.
+            </small>
+          </div>
+
+          <hr>
+          <div class="form-group">
+            <p>Costo envío: $<span id="shippingCost">0</span></p>
+            <p><strong>Total con envío: $<span id="totalConEnvio">0</span></strong></p>
           </div>
         </div>
         <div class="modal-footer">
@@ -225,8 +244,6 @@
     </div>
   </div>
 </div>
-
-<!-- Modal Confirmación -->
 <div class="modal fade" id="modalConfirmacion" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -251,7 +268,6 @@
   <p>Dirección <br>Comuna de Maipu <br>Av. no se llama 456</p>
 </footer>
 
-<!-- Modal Quienes Somos -->
 <div id="modalAbout" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -270,7 +286,7 @@
 </div>
 
 <script>
-    // Simulación de pago: si la tarjeta termina en 0 el pago falla
+  // Manejar formulario de pago 
     document.getElementById('formPago').addEventListener('submit', function(e) {
       e.preventDefault();
       var tarjeta = document.getElementById('tarjeta').value.trim();
@@ -284,78 +300,24 @@
       }, 400);
     });
 
-  
+  // Manejar el botón de Tu cuenta
     $(function() {
-      var $popover = $('#popoverAccount');
-      var $btn = $('#accountBtn');
-      var hideTimeout;
+  const $popover = $('#popoverAccount');
+  const $btn = $('#accountBtn');
+  const correo = localStorage.getItem('correo');
 
-      
-      $btn.on('click', function(e) {
-        e.preventDefault();
-        $('.popover-account').not($popover).hide();
-      
-        var offset = $btn.offset();
-        var height = $btn.outerHeight();
-        var left = $btn.position().left;
-        $popover.css({
-          top: $btn.parent().height(),
-          left: $btn.position().left - ($popover.outerWidth()/2) + ($btn.outerWidth()/2),
-          display: 'block'
-        });
-        
-        return false;
-      });
+  if (correo) {
+    $('#cuentaActiva').text(correo);
+  }
 
-      
-      $(document).on('mousedown', function(e) {
-        if (!$(e.target).closest('#popoverAccount, #accountBtn').length) {
-          $popover.hide();
-        }
-      });
-
-    
-      $(window).on('scroll resize', function() {
-        $popover.hide();
-      });
-    });
-  </script>
- 
-  <style>
-    .navbar-nav > li { position: relative; }
-  </style>
-  <div style="display:none"></div>
- 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const correo = localStorage.getItem('correo');
-      const rol = localStorage.getItem('rol');
-      const cuentaSpan = document.getElementById('cuentaActiva');
-
-      if (correo && rol === 'cliente' && cuentaSpan) {
-        cuentaSpan.textContent = correo;
-      }
-    });
-  </script>
-  <script>
-  $(function() {
-    const $popover = $('#popoverAccount');
-    const $btn = $('#accountBtn');
-    const correo = localStorage.getItem('correo');
-
-    
-    if (correo) {
-      $('#cuentaActiva').text(correo);
-    }
-
-    // Mostrar correo si está logueado
-    if (correo) {
-      $popover.html(`
-        <p>Sesión iniciada como:</p>
-        <strong>${correo}</strong><br><br>
-        <a href="pedidos.html" class="btn btn-info btn-lg">Ver mis pedidos</a><br><br>
-        <button id="cerrarSesion" class="btn btn-danger btn-lg">Cerrar sesión</button>
-      `);
+  if (correo) {
+    $popover.html(`
+      <p>Sesión iniciada como:</p>
+      <strong>${correo}</strong><br><br>
+      <a href="pedidos.html" class="btn btn-info btn-lg">Ver mis pedidos</a><br><br>
+      <a href="preferencias.html" class="btn btn-warning btn-lg">Preferencias</a><br><br>
+      <button id="cerrarSesion" class="btn btn-danger btn-lg">Cerrar sesión</button>
+    `);
     } else {
       $popover.html(`
         <a href="login.html" class="btn btn-primary btn-lg">Iniciar sesión</a><br>
@@ -364,7 +326,6 @@
       `);
     }
 
-    
     $btn.on('click', function(e) {
       e.preventDefault();
       $('.popover-account').not($popover).hide();
@@ -376,7 +337,6 @@
       return false;
     });
 
-   
     $(document).on('mousedown', function(e) {
       if (!$(e.target).closest('#popoverAccount, #accountBtn').length) {
         $popover.hide();
@@ -387,13 +347,39 @@
       $popover.hide();
     });
 
-    // Cerrar sesión
     $(document).on('click', '#cerrarSesion', function() {
-      sessionStorage.setItem('desdeLogout', 'true');
       localStorage.clear();
       window.location.href = 'inicio.html';
     });
   });
-</script>
+  </script>
+  <script>
+    // Manejar el token y rol del usuario
+  document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('token');
+    const rol = localStorage.getItem('rol');
+  });
+
+  </script>
+ 
+  <style>
+    .navbar-nav > li { position: relative; }
+  </style>
+  <div style="display:none"></div>
+ 
+  <script>
+    // Mostrar el correo del usuario en la cuenta activa
+    document.addEventListener('DOMContentLoaded', () => {
+      const correo = localStorage.getItem('correo');
+      const rol = localStorage.getItem('rol');
+      const cuentaSpan = document.getElementById('cuentaActiva');
+
+      if (correo && rol === 'cliente' && cuentaSpan) {
+        cuentaSpan.textContent = correo;
+      }
+    });
+    </script>
+  
+
 </body>
 </html>

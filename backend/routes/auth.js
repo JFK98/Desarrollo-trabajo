@@ -1,22 +1,23 @@
 const express = require('express');
-const Usuario = require('../models/Usuario'); // Importa el modelo de usuarios
+const Usuario = require('../models/Usuario'); 
 const router = express.Router();
 
-/**
- * 🔹 Ruta de login
- */
+// Ruta para login
 router.post('/login', async (req, res) => {
   try {
     const { correo, password } = req.body;
 
-    // Buscar usuario en la base de datos
-    const usuario = await Usuario.findOne({ correo, password });
+    const usuario = await Usuario.findOne({ correo });
 
     if (!usuario) {
       return res.status(401).json({ ok: false, msg: 'Credenciales inválidas' });
     }
 
-    // Respuesta con datos del usuario (sin password)
+    
+    if (usuario.password !== password) {
+      return res.status(401).json({ ok: false, msg: 'Credenciales inválidas' });
+    }
+
     res.json({
       ok: true,
       usuario: {
@@ -26,32 +27,28 @@ router.post('/login', async (req, res) => {
         rol: usuario.rol,
         telefono: usuario.telefono
       },
-      // ⚠️ Aquí podrías generar un JWT en producción
-      token: "fake-jwt-token" 
+      token: "fake-jwt-token"
     });
+
   } catch (err) {
     res.status(500).json({ ok: false, msg: 'Error en el servidor', error: err.message });
   }
 });
 
-/**
- * 🔹 Ruta de registro
- */
+// Ruta para registro
 router.post('/registro', async (req, res) => {
   try {
     const { nombre, correo, password, rol, telefono } = req.body;
 
-    // Verificar si ya existe un usuario con ese correo
     const existe = await Usuario.findOne({ correo });
     if (existe) {
       return res.status(400).json({ ok: false, msg: 'El correo ya está registrado' });
     }
 
-    // Crear nuevo usuario
     const nuevoUsuario = await Usuario.create({
       nombre,
       correo,
-      password, // ⚠️ En producción deberías encriptar con bcrypt
+      password, 
       rol: rol || 'cliente',
       telefono
     });
@@ -71,11 +68,7 @@ router.post('/registro', async (req, res) => {
   }
 });
 
-/**
- * 🔹 Ruta de logout
- * (En JWT no es estrictamente necesario, basta con borrar el token en el frontend.
- *  Aquí devolvemos una respuesta para que tu frontend no falle.)
- */
+// Ruta para logout
 router.post('/logout', (req, res) => {
   res.json({ ok: true, msg: 'Sesión cerrada correctamente' });
 });

@@ -1,3 +1,4 @@
+//Manejo de peticiones a la API
 const apiFetch = async (entry, { body, params } = {}) => {
   try {
     const token = localStorage.getItem('token');
